@@ -13,5 +13,13 @@ namespace PkcsExtenions
         {
             throw new NotImplementedException($"{className}.{methodName} is not implement in this version PkcsExtenions.");
         }
+
+        public static void CheckRange(string parameter1Name, int parameter1, string parameter2Name, int parameter2)
+        {
+            if (parameter1 >= parameter2)
+            {
+                throw new ArgumentOutOfRangeException($"Argument {parameter1Name} mus by less than argument {parameter2Name}.");
+            }
+        }
     }
 }
