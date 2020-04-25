@@ -10,7 +10,7 @@ namespace PkcsExtenions.Algorithms
     {
         public static byte[] GenerateSeed(this IRandomGenerator generator, int length)
         {
-            if (length < 0) throw new ArgumentOutOfRangeException(nameof(len));
+            if (length < 0) throw new ArgumentOutOfRangeException(nameof(length));
 
             byte[] result = new byte[length];
             generator.NextBytes(result);
