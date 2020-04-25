@@ -16,17 +16,23 @@ namespace PkcsExtenions.Pkcs7
             protected set;
         }
 
-        public string ContentDisposition
+        public string ContentType
         {
             get;
             protected set;
         }
 
-        public Pkcs7IdAaContentHint(string fileName, string contentDisposition = "application/octet-stream")
-                : base(Pkcs7Oids.IdAaContentHint, CreateRawAsn1(contentDisposition, fileName))
+        public Pkcs7IdAaContentHint(string fileName, string contentType)
+                : base(Pkcs7Oids.IdAaContentHint, CreateRawAsn1(fileName, contentType))
         {
             this.FileName = fileName;
-            this.ContentDisposition = contentDisposition;
+            this.ContentType = contentType;
+        }
+
+        public Pkcs7IdAaContentHint(string fileName)
+            :this(fileName, "application/octet-stream")
+        {
+
         }
 
         public override void CopyFrom(AsnEncodedData asnEncodedData)
@@ -40,14 +46,14 @@ namespace PkcsExtenions.Pkcs7
             return null;
         }
 
-        private static byte[] CreateRawAsn1(string fileName, string contentDisposition)
+        private static byte[] CreateRawAsn1(string fileName, string contentType)
         {
             if (fileName == null) throw new ArgumentNullException(nameof(fileName));
-            if (contentDisposition == null) throw new ArgumentNullException(nameof(contentDisposition));
+            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
 
             string idDataString = string.Concat("MIME-Version: 1.0\r\nContent-Type: ",
-                contentDisposition, 
-                "\r\nContent-Disposition: attachment;	filename=\"", 
+                contentType, 
+                "\r\nContent-Disposition: attachment; filename=\"", 
                 fileName, 
                 "\"");
 
