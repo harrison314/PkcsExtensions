@@ -21,6 +21,11 @@ namespace PkcsExtenions.Algorithms
         private byte[] state;
         private byte[] seed;
 
+        public int HashSize
+        {
+            get => this.digest.HashSize;
+        }
+
         public DigestRandomGenerator(HashAlgorithm hashAlgorithm)
         {
             this.digest = hashAlgorithm ?? throw new ArgumentNullException(nameof(hashAlgorithm));
