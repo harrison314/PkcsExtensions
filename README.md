@@ -1,6 +1,8 @@
 # PKCS Extensions
 PKCS extensions for .Net Standrad, .Net Core and Blazor BCL wihthout extenranl dependencies.
 
+Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
+
 ## Features
 - Namespace **PkcsExtenions.Algorithms**:
   - DigestRandomGenerator - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
