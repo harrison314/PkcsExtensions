@@ -9,13 +9,25 @@ using System.Threading.Tasks;
 namespace PkcsExtenions.Algorithms
 {
     /// <summary>
-    /// KDF algorithm SP800-108.
+    /// KDF algorithm SP800-108 in counter mode.
     /// </summary>
     public static class SP800_108
     {
         const int SHORT_BYTECOPY_THRESHOLD = 32;
         const int COUNTER_LENGTH = sizeof(uint), DERIVED_KEY_LENGTH_LENGTH = sizeof(uint);
         const int StackAllocTreshold = 84;
+
+        public static void DeriveKey(Func<HMAC> hmacFactory, byte[] key, ReadOnlySpan<byte> label, ReadOnlySpan<byte> context, Span<byte> derivedOutput, uint counter = 1)
+        {
+            using HMAC hmac = hmacFactory();
+            hmac.Key = key;
+
+            int bufferLen = CalculateBufferLenght(label, context);
+            Span<byte> buffer = (bufferLen > StackAllocTreshold) ? stackalloc byte[bufferLen] : new byte[bufferLen];
+            FillBuffer(buffer, label, context, checked((uint)(derivedOutput.Length << 3)));
+
+            DeriveKey(hmac, buffer, derivedOutput, counter);
+        }
 
         private static int CalculateBufferLenght(ReadOnlySpan<byte> label, ReadOnlySpan<byte> context)
         {
@@ -51,19 +63,7 @@ namespace PkcsExtenions.Algorithms
             }
         }
 
-        public static void DeriveKey(Func<HMAC> hmacFactory, byte[] key, ReadOnlySpan<byte> label, ReadOnlySpan<byte> context, Span<byte> derivedOutput, uint counter = 1)
-        {
-            using HMAC hmac = hmacFactory();
-            hmac.Key = key;
-
-            int bufferLen = CalculateBufferLenght(label, context);
-            Span<byte> buffer = (bufferLen > StackAllocTreshold) ? stackalloc byte[bufferLen] : new byte[bufferLen];
-            FillBuffer(buffer, label, context, checked((uint)(derivedOutput.Length << 3)));
-
-            DeriveKey(hmac, buffer, derivedOutput, counter);
-        }
-
-        internal static void DeriveKey(HMAC keyedHmac, Span<byte> bufferArray, Span<byte> derivedOutput, uint counter = 1)
+        private static void DeriveKey(HMAC keyedHmac, Span<byte> bufferArray, Span<byte> derivedOutput, uint counter = 1)
         {
             int derivedOutputCount = derivedOutput.Length;
             int derivedOutputOffset = 0;
