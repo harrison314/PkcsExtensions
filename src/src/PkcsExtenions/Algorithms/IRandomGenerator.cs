@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Algorithms
 {
-    // TODO: IDisposable and reimplement random generators
-    public interface IRandomGenerator
+    /// <summary>
+    /// The secure random generator interface.
+    /// </summary>
+    /// <seealso cref="IDisposable"/>
+    public interface IRandomGenerator : IDisposable
     {
         void NextBytes(byte[] buffer);
 

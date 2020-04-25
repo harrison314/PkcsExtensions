@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Algorithms
 {
+    /// <summary>
+    /// The secure digest random generator.
+    /// </summary>
     public class DigestRandomGenerator : IRandomGenerator
     {
         private readonly HashAlgorithm digest;
+        private readonly bool isDigestOwner;
         private const long CYCLE_COUNT = 10;
 
         private long stateCounter;
@@ -24,6 +28,13 @@ namespace PkcsExtenions.Algorithms
             this.seedCounter = 1;
             this.state = new byte[this.digest.HashSize / 8];
             this.stateCounter = 1;
+            this.isDigestOwner = false;
+        }
+
+        public DigestRandomGenerator(HashAlgorithmName hashAlgorithmName)
+            : this(HashAlgorithmConvertor.ToHashAlgorithm(hashAlgorithmName))
+        {
+            this.isDigestOwner = true;
         }
 
         public void AddSeedMaterial(byte[] inSeed)
@@ -49,7 +60,7 @@ namespace PkcsExtenions.Algorithms
         {
             if (bytes == null) throw new ArgumentNullException(nameof(bytes));
             if (start < 0 || start >= bytes.Length) throw new ArgumentOutOfRangeException(nameof(start));
-            if (start + len >= bytes.Length) throw new ArgumentOutOfRangeException(nameof(len));
+            if (start + len > bytes.Length) throw new ArgumentOutOfRangeException(nameof(len));
 
             lock (this)
             {
@@ -87,6 +98,14 @@ namespace PkcsExtenions.Algorithms
                     }
                     buffer[i] = this.state[stateOff++];
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (this.isDigestOwner)
+            {
+                this.digest.Dispose();
             }
         }
 
