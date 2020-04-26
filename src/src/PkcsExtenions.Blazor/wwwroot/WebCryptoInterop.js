@@ -19,26 +19,9 @@ var PkcsExtensionsBlazor;
             .then(function (t) { return crypto.subtle.exportKey('pkcs8', t.privateKey); })
             .then(function (buffer) { return toBase64(new Uint8Array(buffer)); });
     };
-    var mapEcJwk = function (jwk) {
-        return {
-            d: jwk.d,
-            x: jwk.x,
-            y: jwk.y
-        };
-    };
-    var generateKeyEcdsa = function (namedCurve) {
-        var ecdsaParams = {
-            name: 'ECDSA',
-            namedCurve: namedCurve
-        };
-        return crypto.subtle.generateKey(ecdsaParams, true, ['sign', 'verify'])
-            .then(function (t) { return crypto.subtle.exportKey('jwk', t.privateKey); })
-            .then(function (t) { return mapEcJwk(t); });
-    };
     function Load() {
         window['PkcsExtensionsBlazor_getRandomValues'] = getRandomValues;
         window['PkcsExtensionsBlazor_generateKeyRsa'] = generateKeyRsa;
-        window['PkcsExtensionsBlazor_generateKeyEcdsa'] = generateKeyEcdsa;
     }
     PkcsExtensionsBlazor.Load = Load;
 })(PkcsExtensionsBlazor || (PkcsExtensionsBlazor = {}));

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.ASN1
 {
-    internal sealed class AsnWriter : IDisposable
+    public sealed class AsnWriter : IDisposable
     {
         private byte[] _buffer;
         private int _offset;

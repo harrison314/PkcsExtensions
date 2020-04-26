@@ -13,7 +13,5 @@ namespace PkcsExtenions.Blazor
         ValueTask<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default);
 
         ValueTask<RSA> GenerateRsaKeyPair(int keySize, CancellationToken cancellationToken = default);
-
-        ValueTask<ECDsa> GenerateEcdsaKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default);
     }
 }
