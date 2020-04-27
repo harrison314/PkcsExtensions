@@ -3,6 +3,15 @@ namespace PkcsExtensionsBlazor {
 
     // For Browser support see https://diafygi.github.io/webcrypto-examples/
 
+    interface EcDsaPrivateKeyData {
+        kty: 'EC';
+        crv: 'P-256' | 'P-384' | 'P-521';
+        d: string;
+        x: string;
+        y: string;
+    }
+
+
     /**
      * Convert Uint8Array to Base64 string.
      * @param uint8Array
@@ -33,9 +42,31 @@ namespace PkcsExtensionsBlazor {
             .then(buffer => toBase64(new Uint8Array(buffer)));
     };
 
+    const mapEcJwk = function (jwk: JsonWebKey): EcDsaPrivateKeyData {
+        return {
+            kty: 'EC',
+            crv: jwk.crv as any,
+            d: jwk.d,
+            x: jwk.x,
+            y: jwk.y
+        };
+    };
+
+    const generateKeyEcdsa = function (namedCurve: string): PromiseLike<EcDsaPrivateKeyData> {
+        let ecdsaParams = {
+            name: 'ECDSA',
+            namedCurve: namedCurve
+        };
+
+        return crypto.subtle.generateKey(ecdsaParams, true, ['sign', 'verify'])
+            .then(t => crypto.subtle.exportKey('jwk', t.privateKey))
+            .then(t => mapEcJwk(t));
+    };
+
     export function Load(): void {
         window['PkcsExtensionsBlazor_getRandomValues'] = getRandomValues;
         window['PkcsExtensionsBlazor_generateKeyRsa'] = generateKeyRsa;
+        window['PkcsExtensionsBlazor_generateKeyEcdsa'] = generateKeyEcdsa;
     }
 }
 

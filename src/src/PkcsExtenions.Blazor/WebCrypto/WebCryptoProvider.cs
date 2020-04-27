@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using PkcsExtenions.Blazor.Jwk;
 using PkcsExtenions.Blazor.Security;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,23 @@ namespace PkcsExtenions.Blazor.WebCrypto
             this.jsRuntime = jsRuntime ?? throw new ArgumentNullException(nameof(jsRuntime));
         }
 
-        public virtual async ValueTask<RSA> GenerateRsaKeyPair(int keySize, CancellationToken cancellationToken = default)
+        public async ValueTask<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
+        {
+            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+
+            if (count == 0)
+            {
+                return new byte[0];
+            }
+
+            string base64RandomData = await this.jsRuntime.InvokeAsync<string>("PkcsExtensionsBlazor_getRandomValues",
+                cancellationToken: cancellationToken,
+                args: new object[] { count });
+
+            return Convert.FromBase64String(base64RandomData);
+        }
+
+        public async ValueTask<RSA> GenerateRsaKeyPair(int keySize, CancellationToken cancellationToken = default)
         {
             if (keySize <= 0 || keySize % 1024 != 0)
             {
@@ -43,20 +60,46 @@ namespace PkcsExtenions.Blazor.WebCrypto
             }
         }
 
-        public virtual async ValueTask<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default)
+        public async ValueTask<JsonWebKey> GenerateECDsaKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default)
         {
-            if (count < 0) throw new ArgumentOutOfRangeException(nameof(count));
+            string namedCurve = this.TranslateToCurveName(curveName);
 
-            if (count == 0)
-            {
-                return new byte[0];
-            }
-
-            string base64RandomData = await this.jsRuntime.InvokeAsync<string>("PkcsExtensionsBlazor_getRandomValues",
+            Dictionary<string, string> jwkFields = await this.jsRuntime.InvokeAsync<Dictionary<string, string>>("PkcsExtensionsBlazor_generateKeyEcdsa",
                 cancellationToken: cancellationToken,
-                args: new object[] { count });
+                args: new object[] { namedCurve });
 
-            return Convert.FromBase64String(base64RandomData);
+            return this.ConvertToWebKey(jwkFields);
+        }
+
+        private string TranslateToCurveName(WebCryptoCurveName curveName)
+        {
+            return curveName switch
+            {
+                WebCryptoCurveName.NistP256 => "P-256",
+                WebCryptoCurveName.NistP384 => "P-384",
+                WebCryptoCurveName.NistP521 => "P-521",
+                _ => throw new NotImplementedException()
+            };
+        }
+
+        private JsonWebKey ConvertToWebKey(Dictionary<string, string> rawJwk)
+        {
+            JsonWebKey webKey = new JsonWebKey()
+            {
+                Kty = "EC",
+                CurveName = rawJwk["crv"],
+                D = Base64Url.EncodeFromString(rawJwk["d"]),
+                X = Base64Url.EncodeFromString(rawJwk["x"]),
+                Y = Base64Url.EncodeFromString(rawJwk["y"])
+            };
+
+            webKey.KeyOps = new List<string>()
+            {
+                JsonWebKeyOperation.Sign,
+                JsonWebKeyOperation.Verify
+            };
+
+            return webKey;
         }
     }
 }

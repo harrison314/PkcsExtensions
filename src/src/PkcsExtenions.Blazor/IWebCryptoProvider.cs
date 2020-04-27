@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PkcsExtenions.Blazor.Jwk;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -13,5 +14,7 @@ namespace PkcsExtenions.Blazor
         ValueTask<byte[]> GetRandomBytes(int count, CancellationToken cancellationToken = default);
 
         ValueTask<RSA> GenerateRsaKeyPair(int keySize, CancellationToken cancellationToken = default);
+
+        ValueTask<JsonWebKey> GenerateECDsaKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default);
     }
 }

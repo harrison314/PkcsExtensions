@@ -57,6 +57,37 @@ namespace PkcsExtenions.Blazor.Tests
             Assert.IsTrue(verification, "Signature has not verified.");
         }
 
+        [DataTestMethod]
+        [DataRow(WebCryptoCurveName.NistP256, "P-256", @"qg77h9zqz5_57RIIDEBbTDsO2M78GqWMcOAAhtpgLYw", @"Tp7phbE16SZg-xp0VwMdjpOunZUsTokWdO45wwegL5Y", @"IHlXwjcxgxMegAGoLHu4SuJKJUhRGyl1x_iaLrBjxXo", DisplayName = "NistP256 in Firefox")]
+        [DataRow(WebCryptoCurveName.NistP384, "P-384", @"JNdFlIjnweNwRKvbF8C2L2X3HzW2H8J6-Qq01d4gSyer5y2P2PxwqB-YRlmNOHvB", @"cbB7sE4QDBYnjW_g5Irbo4gUH6FjywA7tXiBZLumD0oUA6A6gnfNyr3mu75b-E-6", @"lCoyMrO4qDqUVGjh_had1HLMXGJS-yP4qpbui_w8XmgbGaKTNYzxyhDIx63ZhdGo", DisplayName = "NistP384 in Firefox")]
+        [DataRow(WebCryptoCurveName.NistP521, "P-521", @"AUV4TS78ggLdRKXzlFFoVeE1y2lZuXRBLPR01VG4c-C0uTjTNNxwWvQX9TYQXonC2TS2n9rCD7VEbm9dKIulThIu", @"ANw6E_mpyFffjkNBTlWKBbZ_pKc9xrA3NmS3bEov9EixPMtVW5NDHZnkzICwiEpjlOX1lMmxuzSsENJU3LEcISvg", @"AHfkTRBfejeBbBbv31Fk1LNVpf3JtlArLJfslrhUiCgu-w1FEpXW6FknC6CqNLB-CA6P6p8SflGLUJLYk178MV2J", DisplayName = "NistP521 in Edge")]
+        public async Task GenerateEcdsaKeyPair(WebCryptoCurveName curveName, string browserCurveName, string d, string x, string y)
+        {
+            Mock<IJSRuntime> jsRuntimeMock = new Mock<IJSRuntime>(MockBehavior.Strict);
+            jsRuntimeMock.Setup(t => t.InvokeAsync<Dictionary<string, string>>("PkcsExtensionsBlazor_generateKeyEcdsa",
+                It.IsAny<CancellationToken>(),
+                It.Is<object[]>(q => (string)q[0] == browserCurveName)))
+                .ReturnsAsync(new Dictionary<string, string>()
+                {
+                    {"kty", "EC" },
+                    {"crv", browserCurveName },
+                    {"d", d },
+                    {"x", x },
+                    {"y", y },
+                })
+                .Verifiable();
+
+            WebCryptoProvider provider = new WebCryptoProvider(jsRuntimeMock.Object);
+
+            Jwk.JsonWebKey jwk = await provider.GenerateECDsaKeyPair(curveName);
+
+            // .Net Core testing
+            ECDsa ecdsa = ECDsa.Create(jwk.ToECParameters(true));
+            byte[] hash = this.GenerateRandomData(32);
+            byte[] signature = ecdsa.SignHash(hash);
+            ecdsa.VerifyHash(hash, signature);
+        }
+
         private byte[] GenerateRandomData(int size)
         {
             Random random = new Random(4871);
