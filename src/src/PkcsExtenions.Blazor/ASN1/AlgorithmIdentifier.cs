@@ -24,11 +24,13 @@ namespace PkcsExtenions.Blazor.ASN1
 
         public AlgorithmIdentifier(string algorithmOid)
         {
-            this.Algorithm = algorithmOid;
+            this.Algorithm = algorithmOid ?? throw new ArgumentNullException(nameof(algorithmOid));
         }
 
         public void Write(AsnWriter asnWriter)
         {
+            if (asnWriter == null) throw new ArgumentNullException(nameof(asnWriter));
+
             asnWriter.PushSequence();
             asnWriter.WriteObjectIdentifier(this.Algorithm);
             asnWriter.WriteNull();

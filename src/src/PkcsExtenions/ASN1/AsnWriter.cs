@@ -238,9 +238,9 @@ namespace PkcsExtenions.ASN1
             WriteIntegerCore(Asn1Tag.Integer, value);
         }
 
-        public void WriteInteger(ReadOnlySpan<byte> value)
+        public void WriteInteger(ReadOnlySpan<byte> value, bool unsigned = false)
         {
-            WriteIntegerCore(Asn1Tag.Integer, value);
+            WriteIntegerCore(Asn1Tag.Integer, value, unsigned);
         }
 
         public void WriteInteger(Asn1Tag tag, long value)
@@ -377,7 +377,7 @@ namespace PkcsExtenions.ASN1
             WriteIntegerCore(tag.AsPrimitive(), value);
         }
 
-        private void WriteIntegerCore(Asn1Tag tag, ReadOnlySpan<byte> value)
+        private void WriteIntegerCore(Asn1Tag tag, ReadOnlySpan<byte> value, bool unsigned = false)
         {
             if (value.IsEmpty)
             {
@@ -392,7 +392,7 @@ namespace PkcsExtenions.ASN1
                 ushort masked = (ushort)(bigEndianValue & RedundancyMask);
 
                 // If the first 9 bits are all 0 or are all 1, the value is invalid.
-                if (masked == 0 || masked == RedundancyMask)
+                if ((masked == 0 || masked == RedundancyMask) && !unsigned)
                 {
                     throw new CryptographicException(SR.Cryptography_Der_Invalid_Encoding);
                 }
@@ -400,7 +400,19 @@ namespace PkcsExtenions.ASN1
 
             Debug.Assert(!tag.IsConstructed);
             WriteTag(tag);
-            WriteLength(value.Length);
+            
+
+            if(unsigned && value[0] >= 0x80)
+            {
+                WriteLength(value.Length + 1);
+                _buffer.AsSpan(_offset)[0] = 0x00;
+                _offset += 1;
+            }
+            else
+            {
+                WriteLength(value.Length);
+            }
+
             // WriteLength ensures the content-space
             value.CopyTo(_buffer.AsSpan(_offset));
             _offset += value.Length;

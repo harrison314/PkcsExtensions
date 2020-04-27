@@ -1,6 +1,5 @@
 ﻿using Microsoft.JSInterop;
-using PkcsExtenions.Blazor.Jwk;
-using PkcsExtenions.Blazor.Pkcs8;
+using PkcsExtenions.Blazor.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
