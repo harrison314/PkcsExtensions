@@ -30,6 +30,7 @@ namespace PkcsExtenions.UsageTests
             signer.SignedAttributes.Add(new AsnEncodedData(new Pkcs9SigningTime(DateTime.Now)));
             signer.SignedAttributes.Add(new Pkcs7IdAaContentHint("helloWorld.txt", "text/plain"));
             signer.SignedAttributes.Add(new Pkcs7IdAaSigningCertificateV2(signingCertificate));
+            signer.SignedAttributes.Add(new Pkcs9IdSigningPolicy("1.3.158.36061701.1.2.2", HashAlgorithmName.SHA256, "1A5A86D067512E00DB45FCD8DFB9A0574749D1D1F2A7189ED9F2DFE6ADE82DBD"));
 
             signedCms.ComputeSignature(signer);
             byte[] eidasP7mFileBytes = signedCms.Encode();
