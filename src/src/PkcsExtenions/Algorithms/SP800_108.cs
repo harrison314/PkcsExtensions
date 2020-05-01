@@ -17,7 +17,7 @@ namespace PkcsExtenions.Algorithms
         const int COUNTER_LENGTH = sizeof(uint), DERIVED_KEY_LENGTH_LENGTH = sizeof(uint);
         const int StackAllocTreshold = 84;
 
-        public static void DeriveKey(Func<HMAC> hmacFactory, byte[] key, ReadOnlySpan<byte> label, ReadOnlySpan<byte> context, Span<byte> derivedOutput, uint counter = 1)
+        public static void DeriveKey(Func<HMAC> hmacFactory, byte[] key, ReadOnlySpan<byte> label = default, ReadOnlySpan<byte> context = default, Span<byte> derivedOutput = default, uint counter = 1)
         {
             using HMAC hmac = hmacFactory();
             hmac.Key = key;
