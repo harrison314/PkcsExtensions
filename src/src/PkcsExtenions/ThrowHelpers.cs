@@ -21,5 +21,26 @@ namespace PkcsExtenions
                 throw new ArgumentOutOfRangeException($"Argument {parameter1Name} mus by less than argument {parameter2Name}.");
             }
         }
+
+        public static void CheckNullOrEempty(string name, string value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(name);
+            }
+
+            if (string.IsNullOrEmpty(value))
+            {
+                throw new ArgumentException($"Argument {name} is empty string.");
+            }
+        }
+
+        public static void CheckNull(string name, object value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(name);
+            }
+        }
     }
 }

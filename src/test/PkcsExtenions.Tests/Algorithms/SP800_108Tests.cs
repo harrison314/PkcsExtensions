@@ -46,5 +46,14 @@ namespace PkcsExtenions.Tests.Algorithms
 
             Assert.AreEqual(HexConvertor.GetString(resultOriginal), HexConvertor.GetString(resultCustom));
         }
+
+        [TestMethod]
+        public void DeriveKeyWithString()
+        {
+            byte[] key = HexConvertor.GetBytes("1f5942ea0ab514227e339d14743b1df7707a868483725d6166d850d57cd33420");
+            byte[] resultOriginal = new byte[124];
+
+            SP800_108.DeriveKey("HMACSHA256", key, derivedOutput: resultOriginal);
+        }
     }
 }

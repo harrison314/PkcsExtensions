@@ -19,6 +19,9 @@ namespace PkcsExtenions.Algorithms
 
         public static void DeriveKey(Func<HMAC> hmacFactory, byte[] key, ReadOnlySpan<byte> label = default, ReadOnlySpan<byte> context = default, Span<byte> derivedOutput = default, uint counter = 1)
         {
+            ThrowHelpers.CheckNull(nameof(hmacFactory), hmacFactory);
+            ThrowHelpers.CheckNull(nameof(key), key);
+
             using HMAC hmac = hmacFactory();
             hmac.Key = key;
 
@@ -27,6 +30,17 @@ namespace PkcsExtenions.Algorithms
             FillBuffer(buffer, label, context, checked((uint)(derivedOutput.Length << 3)));
 
             DeriveKey(hmac, buffer, derivedOutput, counter);
+        }
+
+        public static void DeriveKey(string hmacAlgorithmName, byte[] key, ReadOnlySpan<byte> label = default, ReadOnlySpan<byte> context = default, Span<byte> derivedOutput = default, uint counter = 1)
+        {
+            ThrowHelpers.CheckNullOrEempty(nameof(hmacAlgorithmName), hmacAlgorithmName);
+            DeriveKey(() => HMAC.Create(hmacAlgorithmName),
+                key,
+                label,
+                context,
+                derivedOutput,
+                counter);
         }
 
         private static int CalculateBufferLenght(ReadOnlySpan<byte> label, ReadOnlySpan<byte> context)
