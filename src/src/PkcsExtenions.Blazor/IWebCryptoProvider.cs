@@ -15,6 +15,6 @@ namespace PkcsExtenions.Blazor
 
         ValueTask<RSA> GenerateRsaKeyPair(int keySize, CancellationToken cancellationToken = default);
 
-        ValueTask<JsonWebKey> GenerateECDsaKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default);
+        ValueTask<JsonWebKey> GenerateECDsaJwkKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default);
     }
 }

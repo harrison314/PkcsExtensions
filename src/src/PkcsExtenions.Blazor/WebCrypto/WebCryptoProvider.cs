@@ -60,7 +60,7 @@ namespace PkcsExtenions.Blazor.WebCrypto
             }
         }
 
-        public async ValueTask<JsonWebKey> GenerateECDsaKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default)
+        public async ValueTask<JsonWebKey> GenerateECDsaJwkKeyPair(WebCryptoCurveName curveName, CancellationToken cancellationToken = default)
         {
             string namedCurve = this.TranslateToCurveName(curveName);
 
