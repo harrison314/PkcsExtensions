@@ -3,7 +3,7 @@ PKCS extensions for .Net Standrad, .Net Core and Blazor BCL wihthout extenranl d
 
 Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
 
-## Features
+### Features
 - Namespace **PkcsExtenions.Algorithms**:
   - DigestRandomGenerator - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
   - SP800-108 - Standrd KDF function in counter mode (inspired from Inferno library).
@@ -13,6 +13,15 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 - Namespace **PkcsExtenions.Pkcs7** - Missing features for [SignedCms](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.pkcs.signedcms?view=dotnet-plat-ext-3.1).
 - Namespace **PkcsExtenions.X509Certificates**:
   - X509Certificate2Extensions - X509Certificate2 extensions for determine the usage of certificate.
+
+ ## PkcsExtensions.Blazor
+ Add light interop for [WebCrypto].
+
+ ### Features
+ - Namespace **PkcsExtensions.Blazor**:
+   - IWebCryptoProvider - provide generate random numbers, generate RSA and ECDSA (as JsonWebKey) key pairs
+- Namespace **PkcsExtenions.Blazor.Jwk** - implementation of __JsonWebKey__
+- Namespace **PkcsExtenions.Blazor.Security** - extensions for [System.Security.Cryptography](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=netstandard-2.1)
 
 ## Inspire from
  - [Inferno](https://securitydriven.net/inferno/)

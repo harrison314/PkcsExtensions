@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Blazor.ASN1
 {
-    public class PrivateKeyInfo : IAsn1Node
+    internal class PrivateKeyInfo : IAsn1Node
     {
         public int Version
         {

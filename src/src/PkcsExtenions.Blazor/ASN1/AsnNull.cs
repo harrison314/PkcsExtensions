@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Blazor.ASN1
 {
-    public class AsnNull: IAsn1Node
+    internal class AsnNull: IAsn1Node
     {
         public AsnNull()
         {

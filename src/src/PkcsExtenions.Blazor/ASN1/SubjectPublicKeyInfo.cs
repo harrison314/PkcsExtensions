@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Blazor.ASN1
 {
-    public class SubjectPublicKeyInfo : IAsn1Node
+    internal class SubjectPublicKeyInfo : IAsn1Node
     {
         public AlgorithmIdentifier Algorithm
         {

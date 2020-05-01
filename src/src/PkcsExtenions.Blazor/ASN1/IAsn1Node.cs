@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PkcsExtenions.Blazor.ASN1
 {
-    public interface IAsn1Node
+    internal interface IAsn1Node
     {
         void Write(AsnWriter asnWriter);
     }
