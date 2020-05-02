@@ -4,6 +4,10 @@ PKCS extensions for .Net Standrad, .Net Core and Blazor BCL wihthout extenranl d
 Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
 
 ### Features
+- Namespace **PkcsExtenions**:
+  - HashAlgorithmConvertor - convert `HashALgorithmName` to OID, implementation,...
+  - HexConvertor - convert from/to hexadecimal.
+  - SecureStringHelper - safe provide `SecureString` to byte array.
 - Namespace **PkcsExtenions.Algorithms**:
   - DigestRandomGenerator - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
   - SP800-108 - Standrd KDF function in counter mode (inspired from Inferno library).
@@ -15,7 +19,7 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
   - X509Certificate2Extensions - X509Certificate2 extensions for determine the usage of certificate.
 
  ## PkcsExtensions.Blazor
- Add light interop for [WebCrypto].
+ Add extensions for Blazor and light [WebCrypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) interop.
 
  ### Features
  - Namespace **PkcsExtensions.Blazor**:
