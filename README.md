@@ -9,7 +9,7 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
   - HexConvertor - convert from/to hexadecimal.
   - SecureStringHelper - safe provide `SecureString` to byte array.
 - Namespace **PkcsExtenions.Algorithms**:
-  - HashAlgorithmWrapper - More friendly wrapper for `HashAlgorithm`.
+  - HashAlgorithmExtensions - More friendly extensions for `HashAlgorithm`.
   - DigestRandomGenerator - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
   - SP800-108 - Standrd KDF function in counter mode (inspired from Inferno library).
 - Namespace **PkcsExtenions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
