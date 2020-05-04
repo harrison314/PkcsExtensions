@@ -9,6 +9,8 @@ namespace PkcsExtenions
 {
     public static class HexConvertor
     {
+        private static readonly char[] lowerCaseHex = "0123456789abcdef".ToCharArray();
+        private static readonly char[] upperCaseHex = "0123456789ABCDEF".ToCharArray();
         public static byte[] GetBytes(string hexValue)
         {
             ThrowHelpers.CheckNull(nameof(hexValue), hexValue);
@@ -58,13 +60,37 @@ namespace PkcsExtenions
 
         public static string GetString(Span<byte> data, HexFormat hexFormat = HexFormat.UpperCase)
         {
+            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex; ;
+
             StringBuilder sb = new StringBuilder(data.Length * 2);
             for (int i = 0; i < data.Length; i++)
             {
-                sb.AppendFormat(hexFormat == HexFormat.LowerCase ? "{0:x2}" : "{0:X2}", data[i]);
+                sb.Append(values[data[i] >> 4]);
+                sb.Append(values[data[i] & 0xF]);
             }
 
             return sb.ToString();
+        }
+
+        public static bool TryGetString(Span<byte> data, HexFormat hexFormat, Span<char> destination, out int witeChars)
+        {
+            witeChars = data.Length * 2;
+            if (data.Length * 2 > destination.Length)
+            {
+                witeChars = 0;
+                return false;
+            }
+
+            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex; ;
+
+            for (int i = 0; i < witeChars; i += 2)
+            {
+                byte value = data[i >> 1];
+                destination[i] = values[value >> 4];
+                destination[i + 1] = values[value & 0xF];
+            }
+
+            return true;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

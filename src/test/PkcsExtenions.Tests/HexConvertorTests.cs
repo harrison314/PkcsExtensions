@@ -53,5 +53,27 @@ namespace PkcsExtenions.Tests
 
             Assert.AreEqual("0AAC1F00", result);
         }
+
+        [TestMethod]
+        public void TryGetString_LowerCase()
+        {
+            byte[] input = new byte[] { 0x0A, 0xAC, 0x1F, 0x00 };
+            Span<char> output = new char[input.Length * 2];
+            Assert.IsTrue( HexConvertor.TryGetString(input, HexFormat.LowerCase, output, out int writeChars));
+
+            Assert.AreEqual("0aac1f00", output.ToString());
+            Assert.AreEqual(input.Length * 2, writeChars);
+        }
+
+        [TestMethod]
+        public void TryGetString_UpperCase()
+        {
+            byte[] input = new byte[] { 0x0A, 0xAC, 0x1F, 0x00 };
+            Span<char> output = new char[input.Length * 2];
+            Assert.IsTrue(HexConvertor.TryGetString(input, HexFormat.UpperCase, output, out int writeChars));
+
+            Assert.AreEqual("0AAC1F00", output.ToString());
+            Assert.AreEqual(input.Length * 2, writeChars);
+        }
     }
 }
