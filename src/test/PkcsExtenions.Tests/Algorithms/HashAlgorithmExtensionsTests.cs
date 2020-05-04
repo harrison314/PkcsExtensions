@@ -11,22 +11,12 @@ using System.Threading.Tasks;
 namespace PkcsExtenions.Tests.Algorithms
 {
     [TestClass]
-    public class HashAlgorithmWrapperTests
+    public class HashAlgorithmExtensionsTests
     {
-        [TestMethod]
-        public void Clear()
-        {
-            using SHA1 sha1 = SHA1.Create();
-            HashAlgorithmWrapper hashAlgorithmWrapper = new HashAlgorithmWrapper(sha1);
-
-            hashAlgorithmWrapper.Clear();
-        }
-
         [TestMethod]
         public void UpdateWithArray()
         {
             using SHA1 sha1 = SHA1.Create();
-            HashAlgorithmWrapper hashAlgorithmWrapper = new HashAlgorithmWrapper(sha1);
 
             byte[] data1 = new byte[2];
             byte[] data2 = new byte[20];
@@ -46,11 +36,11 @@ namespace PkcsExtenions.Tests.Algorithms
 
             byte[] exceptedHash = alternative.ComputeHash(ms);
 
-            hashAlgorithmWrapper.Update(data1);
-            hashAlgorithmWrapper.Update(data2);
-            hashAlgorithmWrapper.Update(data3);
+            sha1.Update(data1);
+            sha1.Update(data2);
+            sha1.Update(data3);
 
-            byte[] hash = hashAlgorithmWrapper.DoFinal();
+            byte[] hash = sha1.DoFinal();
 
             CollectionAssert.AreEquivalent(exceptedHash, hash, "Error in cputed hash.");
         }
@@ -59,7 +49,6 @@ namespace PkcsExtenions.Tests.Algorithms
         public void UpdateWithSubArray()
         {
             using SHA1 sha1 = SHA1.Create();
-            HashAlgorithmWrapper hashAlgorithmWrapper = new HashAlgorithmWrapper(sha1);
 
             byte[] data1 = new byte[2];
             byte[] data2 = new byte[24];
@@ -79,11 +68,11 @@ namespace PkcsExtenions.Tests.Algorithms
 
             byte[] exceptedHash = alternative.ComputeHash(ms);
 
-            hashAlgorithmWrapper.Update(data1, 0, 2);
-            hashAlgorithmWrapper.Update(data2, 4, 20);
-            hashAlgorithmWrapper.Update(data3, 13, 120);
+            sha1.Update(data1, 0, 2);
+            sha1.Update(data2, 4, 20);
+            sha1.Update(data3, 13, 120);
 
-            byte[] hash = hashAlgorithmWrapper.DoFinal();
+            byte[] hash = sha1.DoFinal();
 
             CollectionAssert.AreEquivalent(exceptedHash, hash, "Error in cputed hash.");
         }
@@ -92,20 +81,19 @@ namespace PkcsExtenions.Tests.Algorithms
         public void DoFinal()
         {
             using SHA1 sha1 = SHA1.Create();
-            HashAlgorithmWrapper hashAlgorithmWrapper = new HashAlgorithmWrapper(sha1);
 
             byte[] data3 = new byte[147];
 
             Random r = new Random(42);
             r.NextBytes(data3);
-    
+
             using SHA1 alternative = SHA1.Create();
 
             byte[] exceptedHash = alternative.ComputeHash(data3);
 
-            hashAlgorithmWrapper.Update(data3);
+            sha1.Update(data3);
 
-            byte[] hash = hashAlgorithmWrapper.DoFinal();
+            byte[] hash = sha1.DoFinal();
 
             CollectionAssert.AreEquivalent(exceptedHash, hash, "Error in cputed hash.");
         }
@@ -114,7 +102,6 @@ namespace PkcsExtenions.Tests.Algorithms
         public void TryDoFinal()
         {
             using SHA1 sha1 = SHA1.Create();
-            HashAlgorithmWrapper hashAlgorithmWrapper = new HashAlgorithmWrapper(sha1);
 
             byte[] data3 = new byte[147];
 
@@ -125,11 +112,11 @@ namespace PkcsExtenions.Tests.Algorithms
 
             byte[] exceptedHash = alternative.ComputeHash(data3);
 
-            hashAlgorithmWrapper.Update(data3);
+            sha1.Update(data3);
 
             byte[] hash = new byte[80];
-            Assert.IsFalse(hashAlgorithmWrapper.TryDoFinal(new Span<byte>(hash, 0, 5), out _));
-            Assert.IsTrue(hashAlgorithmWrapper.TryDoFinal(new Span<byte>(hash, 0, 78), out int witeBytes));
+            Assert.IsFalse(sha1.TryDoFinal(new Span<byte>(hash, 0, 5), out _));
+            Assert.IsTrue(sha1.TryDoFinal(new Span<byte>(hash, 0, 78), out int witeBytes));
 
             byte[] subArray = hash.Take(witeBytes).ToArray();
             CollectionAssert.AreEquivalent(exceptedHash, subArray, "Error in cputed hash.");
