@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddWebCryptoProvider(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient<IWebCryptoProvider, WebCryptoProvider>();
+            serviceCollection.AddTransient<IEcWebCryptoProvider, EcWebCryptoProvider>();
 
             return serviceCollection;
         }

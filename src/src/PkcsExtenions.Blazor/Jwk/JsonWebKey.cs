@@ -166,7 +166,7 @@ namespace PkcsExtenions.Blazor.Jwk
             this.Y = ecParameters.Q.Y;
         }
 
-        internal bool HasPrivateKey()
+        public bool HasPrivateKey()
         {
             switch (this.Kty)
             {

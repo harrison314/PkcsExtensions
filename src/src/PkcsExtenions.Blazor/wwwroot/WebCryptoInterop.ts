@@ -11,6 +11,14 @@ namespace PkcsExtensionsBlazor {
         y: string;
     }
 
+    type Unpromised<T> = {
+        [P in keyof T]: T[P] extends PromiseLike<infer K> ? K : T[P];
+    }
+
+    // Typescript polyfill
+    declare class Promise {
+        static resolve(p: any): any;
+    }
 
     /**
      * Convert Uint8Array to Base64 string.
@@ -18,6 +26,23 @@ namespace PkcsExtensionsBlazor {
      */
     function toBase64(uint8Array: Uint8Array): string {
         return window.btoa(uint8Array.reduce((data, byte) => data + String.fromCharCode(byte), ''));
+    }
+
+
+    function unpromise<T extends object>(inObj: T): PromiseLike<Unpromised<T>> {
+        let acc = Promise.resolve(0)
+        let outObj: Partial<Unpromised<T>> = {};
+
+        for (let key of Object.keys(inObj)) {
+            if (inObj[key] && typeof inObj[key].then === 'function') {
+                acc = acc.then(_ => inObj[key].then(t => outObj[key] = t));
+            }
+            else {
+                outObj[key] = inObj[key];
+            }
+        }
+
+        return acc.then(_ => outObj);
     }
 
     /**
@@ -63,11 +88,68 @@ namespace PkcsExtensionsBlazor {
             .then(t => mapEcJwk(t));
     };
 
+
+    const sharedEphemeralDhmSecret = function (publicKey: JsonWebKey, bitsLegnht = 256): PromiseLike<EcDsaPrivateKeyData & { derivedBits: string }> {
+
+        let importParams = {
+            name: 'ECDH',
+            namedCurve: publicKey.crv
+        };
+
+        let publicKeyPromise = window.crypto.subtle.importKey('jwk', { ...publicKey, ext: true }, importParams, true, ['deriveBits']);
+        let keyPairPromise = window.crypto.subtle.generateKey(importParams, true, ['deriveBits']);
+
+        return unpromise({
+            otherPublicKey: publicKeyPromise,
+            ephemeralKeyPair: keyPairPromise
+        }).then(material => {
+            let bits = window.crypto.subtle.deriveBits({
+                name: 'ECDH',
+                public: material.otherPublicKey,
+            }, material.ephemeralKeyPair.privateKey, bitsLegnht)
+                .then(t => new Uint8Array(t));
+
+            let exportedPublicKey = window.crypto.subtle.exportKey('jwk', material.ephemeralKeyPair.publicKey);
+
+            return unpromise({ publicJwk: exportedPublicKey, bits: bits })
+                .then(t => ({
+                    ...mapEcJwk(t.publicJwk),
+                    derivedBits: toBase64(t.bits)
+                }));
+        });
+    }
+
+    const sharedDhmSecret = function (privateKey: JsonWebKey, publicKey: JsonWebKey, bitsLegnht = 256): PromiseLike<string> {
+
+        let importParams = {
+            name: 'ECDH',
+            namedCurve: publicKey.crv
+        };
+
+        let publicKeyPromise = window.crypto.subtle.importKey('jwk', { ...publicKey, ext: true }, importParams, true, ['deriveBits']);
+        let privateKeyPromise = window.crypto.subtle.importKey('jwk', { ...privateKey, ext: true }, importParams, true, ['deriveBits']);
+
+        return unpromise({
+            publicKey: publicKeyPromise,
+            privateKey: privateKeyPromise
+        }).then(material => {
+            return window.crypto.subtle.deriveBits({
+                name: 'ECDH',
+                public: material.publicKey,
+            }, material.privateKey, bitsLegnht)
+                .then(t => toBase64(new Uint8Array(t)));
+        });
+    }
+
     export function Load(): void {
         window['PkcsExtensionsBlazor_getRandomValues'] = getRandomValues;
         window['PkcsExtensionsBlazor_generateKeyRsa'] = generateKeyRsa;
         window['PkcsExtensionsBlazor_generateKeyEcdsa'] = generateKeyEcdsa;
+        window['PkcsExtensionsBlazor_sharedEphemeralDhmSecret'] = sharedEphemeralDhmSecret;
+        window['PkcsExtensionsBlazor_sharedDhmSecret'] = sharedDhmSecret;
     }
 }
 
 PkcsExtensionsBlazor.Load();
+
+
