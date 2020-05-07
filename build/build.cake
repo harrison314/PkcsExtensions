@@ -1,3 +1,5 @@
+#addin nuget:?package=Cake.Git&version=0.21.0
+
 var target = Argument("target", "Default");
 var configuration = Argument("Configuration", "Release");
 
@@ -5,6 +7,18 @@ var configuration = Argument("Configuration", "Release");
 // Constants
 
 string artefacts = "./Artifacts";
+
+void UpdateSettings(DotNetCoreSettings settings)
+{
+    if (settings.EnvironmentVariables == null)
+    {
+        settings.EnvironmentVariables = new Dictionary<string, string>();
+    }
+
+    var branch = GitBranchCurrent("..");
+    //settings.EnvironmentVariables.Add("RepositoryBranch", branch.FriendlyName);
+    settings.EnvironmentVariables.Add("RepositoryCommit", branch.Tip.Sha);
+}
 
 // ****************************************************************************
 
@@ -43,6 +57,7 @@ Task("Build-PKCSExtensuions")
             NoBuild = false
         };
 
+        UpdateSettings(settings);
         DotNetCorePack("../src/src/PkcsExtenions/PkcsExtenions.csproj", settings);
     });
 
@@ -59,6 +74,7 @@ Task("Build-PKCSExtensuionsBlazor")
             NoBuild = false
         };
 
+        UpdateSettings(settings);
         DotNetCorePack("../src/src/PkcsExtenions.Blazor/PkcsExtenions.Blazor.csproj", settings);
     });
 
