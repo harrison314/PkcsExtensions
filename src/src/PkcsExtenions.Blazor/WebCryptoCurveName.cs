@@ -10,6 +10,6 @@ namespace PkcsExtenions.Blazor
     {
         NistP256,
         NistP384,
-        NistP521
+        NistP512
     }
 }

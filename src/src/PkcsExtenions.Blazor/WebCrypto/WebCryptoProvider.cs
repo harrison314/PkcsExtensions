@@ -26,7 +26,7 @@ namespace PkcsExtenions.Blazor.WebCrypto
 
             if (count == 0)
             {
-                return new byte[0];
+                return Array.Empty<byte>();
             }
 
             string base64RandomData = await this.jsRuntime.InvokeAsync<string>("PkcsExtensionsBlazor_getRandomValues",
@@ -77,7 +77,7 @@ namespace PkcsExtenions.Blazor.WebCrypto
             {
                 WebCryptoCurveName.NistP256 => "P-256",
                 WebCryptoCurveName.NistP384 => "P-384",
-                WebCryptoCurveName.NistP521 => "P-521",
+                WebCryptoCurveName.NistP512 => "P-512",
                 _ => throw new NotImplementedException()
             };
         }
@@ -96,7 +96,8 @@ namespace PkcsExtenions.Blazor.WebCrypto
             webKey.KeyOps = new List<string>()
             {
                 JsonWebKeyOperation.Sign,
-                JsonWebKeyOperation.Verify
+                JsonWebKeyOperation.Verify,
+                JsonWebKeyOperation.DeriveBits
             };
 
             return webKey;
