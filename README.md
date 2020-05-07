@@ -25,6 +25,7 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
  ### Features
  - Namespace **PkcsExtensions.Blazor**:
    - IWebCryptoProvider - provide generate random numbers, generate RSA and ECDSA (as JsonWebKey) key pairs
+   - IEcWebCryptoProvider - provide methods `GetSharedDhmSecret` for derive bytes using _Diffie Hellman Merkle_ and `GetSharedEphemeralDhmSecret` for ECIES scheme.
 - Namespace **PkcsExtenions.Blazor.Jwk** - implementation of __JsonWebKey__
 - Namespace **PkcsExtenions.Blazor.Security** - extensions for [System.Security.Cryptography](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=netstandard-2.1)
 
