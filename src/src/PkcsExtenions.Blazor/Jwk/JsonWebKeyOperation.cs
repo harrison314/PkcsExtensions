@@ -19,5 +19,7 @@ namespace PkcsExtenions.Blazor.Jwk
         public const string Wrap = "wrapKey";
 
         public const string Unwrap = "unwrapKey";
+
+        public const string DeriveBits = "deriveBits";
     }
 }
