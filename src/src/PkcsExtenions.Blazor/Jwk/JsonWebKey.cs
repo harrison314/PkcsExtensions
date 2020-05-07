@@ -117,6 +117,28 @@ namespace PkcsExtenions.Blazor.Jwk
 
         }
 
+        public JsonWebKey(JsonWebKey other)
+        {
+            if (other == null) throw new ArgumentNullException(nameof(other));
+
+            this.CurveName = other.CurveName;
+            this.D = other.D;
+            this.DP = other.DP;
+            this.DQ = other.DQ;
+            this.E = other.E;
+            this.K = other.K;
+            this.KeyOps = other.KeyOps;
+            this.Kid = other.Kid;
+            this.Kty = other.Kty;
+            this.N = other.N;
+            this.P = other.P;
+            this.Q = other.Q;
+            this.QI = other.QI;
+            this.T = other.T;
+            this.X = other.X;
+            this.Y = other.Y;
+        }
+
         public JsonWebKey(Aes aesProvider)
         {
             if (aesProvider == null) throw new ArgumentNullException(nameof(aesProvider));
