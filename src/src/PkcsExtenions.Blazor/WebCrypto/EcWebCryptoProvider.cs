@@ -21,12 +21,12 @@ namespace PkcsExtenions.Blazor.WebCrypto
         public async ValueTask<byte[]> GetSharedDhmSecret(JsonWebKey privateKey, JsonWebKey otherPublicKey, CancellationToken cancellationToken = default)
         {
             if (privateKey == null) throw new ArgumentNullException(nameof(privateKey));
-            if (privateKey.HasPrivateKey()) throw new ArgumentException("privateKey must by private key.");
-            if (string.Equals("EC", privateKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
+            if (!privateKey.HasPrivateKey()) throw new ArgumentException("privateKey must by private key.");
+            if (!string.Equals("EC", privateKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
 
             if (otherPublicKey == null) throw new ArgumentNullException(nameof(otherPublicKey));
-            if (!otherPublicKey.HasPrivateKey()) throw new ArgumentException("otherPublicKey must by public key.");
-            if (string.Equals("EC", otherPublicKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
+            if (otherPublicKey.HasPrivateKey()) throw new ArgumentException("otherPublicKey must by public key.");
+            if (!string.Equals("EC", otherPublicKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
 
             JsonWebKeyProxy privateKeyProxy = new JsonWebKeyProxy(privateKey);
             JsonWebKeyProxy otherPublicKeyProxy = new JsonWebKeyProxy(otherPublicKey);
@@ -42,8 +42,8 @@ namespace PkcsExtenions.Blazor.WebCrypto
         public async ValueTask<EcdhEphemeralBundle> GetSharedEphemeralDhmSecret(JsonWebKey otherPublicKey, CancellationToken cancellationToken = default)
         {
             if (otherPublicKey == null) throw new ArgumentNullException(nameof(otherPublicKey));
-            if (!otherPublicKey.HasPrivateKey()) throw new ArgumentException("otherPublicKey must by public key.");
-            if (string.Equals("EC", otherPublicKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
+            if (otherPublicKey.HasPrivateKey()) throw new ArgumentException("otherPublicKey must by public key.");
+            if (!string.Equals("EC", otherPublicKey.Kty, StringComparison.Ordinal)) throw new ArgumentException("otherPublicKey must by EC key");
 
             JsonWebKeyProxy otherPublicKeyProxy = new JsonWebKeyProxy(otherPublicKey);
             int lenght = this.ToDhmLen(otherPublicKey);
@@ -65,7 +65,7 @@ namespace PkcsExtenions.Blazor.WebCrypto
             {
                 "P-256" => 32,
                 "P-384" => 48,
-                "P-512" => 64,
+                "P-521" => 66,
                 _ => throw new NotSupportedException($"Curve {jsonWebKey.CurveName} is not supported.")
             };
         }

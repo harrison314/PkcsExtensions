@@ -77,7 +77,7 @@ namespace PkcsExtenions.Blazor.WebCrypto
             {
                 WebCryptoCurveName.NistP256 => "P-256",
                 WebCryptoCurveName.NistP384 => "P-384",
-                WebCryptoCurveName.NistP512 => "P-512",
+                WebCryptoCurveName.NistP521 => "P-521",
                 _ => throw new NotImplementedException()
             };
         }
