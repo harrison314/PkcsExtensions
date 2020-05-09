@@ -55,6 +55,8 @@ And register services in _Main_ method:
     }
 ```
 
+### Examples
+
 See [other examples](Examples/BlazorWebAssemblyExamples.md).
 
 ## Inspire from
