@@ -56,6 +56,27 @@ var PkcsExtensionsBlazor;
             y: jwk.y
         };
     };
+    var sanilizeEcJwk = function (jwk) {
+        if (jwk.d) {
+            return {
+                kty: 'EC',
+                crv: jwk.crv,
+                d: jwk.d,
+                x: jwk.x,
+                y: jwk.y,
+                ext: true
+            };
+        }
+        else {
+            return {
+                kty: 'EC',
+                crv: jwk.crv,
+                x: jwk.x,
+                y: jwk.y,
+                ext: true
+            };
+        }
+    };
     var generateKeyEcdsa = function (namedCurve) {
         var ecdsaParams = {
             name: 'ECDSA',
@@ -71,7 +92,7 @@ var PkcsExtensionsBlazor;
             name: 'ECDH',
             namedCurve: publicKey.crv
         };
-        var publicKeyPromise = window.crypto.subtle.importKey('jwk', __assign(__assign({}, publicKey), { ext: true }), importParams, true, ['deriveBits']);
+        var publicKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(publicKey), importParams, true, ['deriveBits']);
         var keyPairPromise = window.crypto.subtle.generateKey(importParams, true, ['deriveBits']);
         return unpromise({
             otherPublicKey: publicKeyPromise,
@@ -93,8 +114,8 @@ var PkcsExtensionsBlazor;
             name: 'ECDH',
             namedCurve: publicKey.crv
         };
-        var publicKeyPromise = window.crypto.subtle.importKey('jwk', __assign(__assign({}, publicKey), { ext: true }), importParams, true, ['deriveBits']);
-        var privateKeyPromise = window.crypto.subtle.importKey('jwk', __assign(__assign({}, privateKey), { ext: true }), importParams, true, ['deriveBits']);
+        var publicKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(publicKey), importParams, true, ['deriveBits']);
+        var privateKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(privateKey), importParams, true, ['deriveBits']);
         return unpromise({
             publicKey: publicKeyPromise,
             privateKey: privateKeyPromise

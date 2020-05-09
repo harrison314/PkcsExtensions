@@ -63,9 +63,9 @@ namespace PkcsExtenions.Blazor.WebCrypto
         {
             return jsonWebKey.CurveName switch
             {
-                "P-256" => 32,
-                "P-384" => 48,
-                "P-521" => 66,
+                "P-256" => 256,
+                "P-384" => 384,
+                "P-521" => 528,
                 _ => throw new NotSupportedException($"Curve {jsonWebKey.CurveName} is not supported.")
             };
         }

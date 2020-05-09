@@ -77,6 +77,27 @@ namespace PkcsExtensionsBlazor {
         };
     };
 
+    const sanilizeEcJwk = function (jwk: JsonWebKey): JsonWebKey {
+        if (jwk.d) {
+            return {
+                kty: 'EC',
+                crv: jwk.crv,
+                d: jwk.d,
+                x: jwk.x,
+                y: jwk.y,
+                ext: true
+            };
+        } else {
+            return {
+                kty: 'EC',
+                crv: jwk.crv,
+                x: jwk.x,
+                y: jwk.y,
+                ext: true
+            };
+        }
+    }
+
     const generateKeyEcdsa = function (namedCurve: string): PromiseLike<EcDsaPrivateKeyData> {
         let ecdsaParams = {
             name: 'ECDSA',
@@ -96,7 +117,7 @@ namespace PkcsExtensionsBlazor {
             namedCurve: publicKey.crv
         };
 
-        let publicKeyPromise = window.crypto.subtle.importKey('jwk', { ...publicKey, ext: true }, importParams, true, ['deriveBits']);
+        let publicKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(publicKey), importParams, true, ['deriveBits']);
         let keyPairPromise = window.crypto.subtle.generateKey(importParams, true, ['deriveBits']);
 
         return unpromise({
@@ -126,8 +147,8 @@ namespace PkcsExtensionsBlazor {
             namedCurve: publicKey.crv
         };
 
-        let publicKeyPromise = window.crypto.subtle.importKey('jwk', { ...publicKey, ext: true }, importParams, true, ['deriveBits']);
-        let privateKeyPromise = window.crypto.subtle.importKey('jwk', { ...privateKey, ext: true }, importParams, true, ['deriveBits']);
+        let publicKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(publicKey), importParams, true, ['deriveBits']);
+        let privateKeyPromise = window.crypto.subtle.importKey('jwk', sanilizeEcJwk(privateKey), importParams, true, ['deriveBits']);
 
         return unpromise({
             publicKey: publicKeyPromise,
