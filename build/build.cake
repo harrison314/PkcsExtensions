@@ -2,6 +2,7 @@
 
 var target = Argument("target", "Default");
 var configuration = Argument("Configuration", "Release");
+var versionSuffix = Argument<string>("VersionSuffix", null);
 
 //*****************************************************************************
 // Constants
@@ -54,7 +55,8 @@ Task("Build-PKCSExtensuions")
             OutputDirectory = artefacts,
             IncludeSource = false,
             IncludeSymbols = false,
-            NoBuild = false
+            NoBuild = false,
+            VersionSuffix =versionSuffix 
         };
 
         UpdateSettings(settings);
@@ -71,7 +73,8 @@ Task("Build-PKCSExtensuionsBlazor")
             OutputDirectory = artefacts,
             IncludeSource = false,
             IncludeSymbols = false,
-            NoBuild = false
+            NoBuild = false,
+            VersionSuffix = versionSuffix 
         };
 
         UpdateSettings(settings);
