@@ -18,6 +18,17 @@ namespace PkcsExtenions
                 "\r\n-----END ", name, " -----");
         }
 
+        public static byte[] ToPemBytes(ReadOnlySpan<byte> data, string name)
+        {
+            ThrowHelpers.CheckNullOrEempty(nameof(name), name);
+
+            string pem = string.Concat("-----BEGIN ", name, "-----\r\n",
+                Convert.ToBase64String(data, Base64FormattingOptions.InsertLineBreaks),
+                "\r\n-----END ", name, " -----");
+
+            return Encoding.ASCII.GetBytes(pem);
+        }
+
         public static ReadOnlySpan<byte> FromDerOrPem(ReadOnlySpan<byte> data)
         {
             if (data.Length < 16) return data;

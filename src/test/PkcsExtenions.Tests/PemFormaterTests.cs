@@ -18,6 +18,13 @@ namespace PkcsExtenions.Tests
         }
 
         [TestMethod]
+        public void ToPemBytes()
+        {
+            byte[] result = PemFormater.ToPemBytes(new byte[200], "NULLS");
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void FromDerOrPem()
         {
             string certificatePem = @"-----BEGIN CERTIFICATE-----
