@@ -29,6 +29,34 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 - Namespace **PkcsExtenions.Blazor.Jwk** - implementation of __JsonWebKey__
 - Namespace **PkcsExtenions.Blazor.Security** - extensions for [System.Security.Cryptography](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=netstandard-2.1)
 
+### Usage
+Install package `dotnet add package PkcsExtensions.Blazor` to Blazor WebAssebmly project.
+
+Add to _index.html_:
+```html
+<script src="_content/PkcsExtenions.Blazor/WebCryptoInterop.js"></script>
+```
+
+And register services in _Main_ method:
+```cs
+    public class Program
+    {
+        public static async Task Main(string[] args)
+        {
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<App>("app");
+            builder.Services.AddSingleton(new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            
+            builder.Services.AddWebCryptoProvider();
+
+            WebAssemblyHost host = builder.Build();
+            await host.RunAsync();
+        }
+    }
+```
+
+See [other examples](Examples/BlazorWebAssemblyExamples.md).
+
 ## Inspire from
  - [Inferno](https://securitydriven.net/inferno/)
  - [Bouncy Castle](https://github.com/novotnyllc/bc-csharp)
