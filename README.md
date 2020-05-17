@@ -5,27 +5,27 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 
 ### Features
 - Namespace **PkcsExtenions**:
-  - HashAlgorithmConvertor - convert `HashAlgorithmName` to OID, implementation,...
-  - HexConvertor - convert from/to hexadecimal.
-  - SecureStringHelper - safe provide `SecureString` to byte array.
+  - `HashAlgorithmConvertor` - convert [HashAlgorithmName](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithmname?view=netstandard-2.1) to OID, implementation,...
+  - `HexConvertor` - convert from/to hexadecimal.
+  - `SecureStringHelper` - safe provide [SecureString](https://docs.microsoft.com/en-us/dotnet/api/system.security.securestring?view=netstandard-2.1) to byte array.
 - Namespace **PkcsExtenions.Algorithms**:
-  - HashAlgorithmExtensions - More friendly extensions for `HashAlgorithm`.
-  - DigestRandomGenerator - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
-  - SP800-108 - Standrd KDF function in counter mode (inspired from Inferno library).
+  - `HashAlgorithmExtensions` - More friendly extensions for [HashAlgorithm](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netstandard-2.1) types.
+  - `DigestRandomGenerator` - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpfull for password generation and entropy collection.
+  - `SP800-108` - Standrd KDF function in counter mode (inspired from Inferno library).
 - Namespace **PkcsExtenions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
 - Namespace **PkcsExtenions.Pkcs1**:
-  - Pkcs1DigestInfo - Is helpfull for RSA signing using SmartCards through PKCS#11.
+  - `Pkcs1DigestInfo` - Is helpfull for RSA signing using SmartCards through PKCS#11.
 - Namespace **PkcsExtenions.Pkcs7** - Missing features for [SignedCms](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.pkcs.signedcms?view=dotnet-plat-ext-3.1).
 - Namespace **PkcsExtenions.X509Certificates**:
-  - X509Certificate2Extensions - X509Certificate2 extensions for determine the usage of certificate.
+  - `X509Certificate2Extensions` - [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1) extensions for determine the usage of certificate.
 
  ## PkcsExtensions.Blazor
  Add extensions for Blazor and light [WebCrypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) interop.
 
  ### Features
  - Namespace **PkcsExtensions.Blazor**:
-   - IWebCryptoProvider - provide generate random numbers, generate RSA and ECDSA (as JsonWebKey) key pairs
-   - IEcWebCryptoProvider - provide methods `GetSharedDhmSecret` for derive bytes using _Diffie Hellman Merkle_ and `GetSharedEphemeralDhmSecret` for ECIES scheme.
+   - `IWebCryptoProvider` - provide generate random numbers, generate RSA and ECDSA (as JsonWebKey) key pairs
+   - `IEcWebCryptoProvider` - provide methods `GetSharedDhmSecret` for derive bytes using _Diffie Hellman Merkle_ and `GetSharedEphemeralDhmSecret` for ECIES scheme.
 - Namespace **PkcsExtenions.Blazor.Jwk** - implementation of __JsonWebKey__
 - Namespace **PkcsExtenions.Blazor.Security** - extensions for [System.Security.Cryptography](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography?view=netstandard-2.1)
 
