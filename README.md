@@ -5,7 +5,7 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 
 ### Features
 - Namespace **PkcsExtenions**:
-  - HashAlgorithmConvertor - convert `HashALgorithmName` to OID, implementation,...
+  - HashAlgorithmConvertor - convert `HashAlgorithmName` to OID, implementation,...
   - HexConvertor - convert from/to hexadecimal.
   - SecureStringHelper - safe provide `SecureString` to byte array.
 - Namespace **PkcsExtenions.Algorithms**:
@@ -58,6 +58,11 @@ And register services in _Main_ method:
 ### Examples
 
 See [other examples](Examples/BlazorWebAssemblyExamples.md).
+
+### Recommendations
+- Avoid use WebCyrpto for hashing, HMAC-ing, encryption, beacose their implementations has differs between browsers and operating systems. Use _.Net_ implementation.
+- Hint: Consider using hig performace eliptic curves [Curve25519](https://en.wikipedia.org/wiki/Curve25519),
+[Ed25519](https://en.wikipedia.org/wiki/EdDSA#Ed25519) or simmilar. Use full managed impelementation e.g. [Chaos.NaCl library](https://github.com/CodesInChaos/Chaos.NaCl).
 
 ## Inspire from
  - [Inferno](https://securitydriven.net/inferno/)
