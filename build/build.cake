@@ -56,7 +56,7 @@ Task("Build-PKCSExtensuions")
             IncludeSource = false,
             IncludeSymbols = false,
             NoBuild = false,
-            VersionSuffix =versionSuffix 
+            VersionSuffix = versionSuffix
         };
 
         UpdateSettings(settings);
