@@ -31,9 +31,7 @@ namespace PkcsExtenions
 
         public static ReadOnlySpan<byte> FromDerOrPem(ReadOnlySpan<byte> data)
         {
-            if (data.Length < 16) return data;
-
-            if (data[0] == 45 && data[1] == 45 && data[2] == 45)
+            if (data.Length > 16 && data[0] == 45 && data[1] == 45 && data[2] == 45)
             {
                 string pem = Encoding.ASCII.GetString(data);
                 Match match = Regex.Match(pem, "-----BEGIN .+?-----(.+?)-----END .+?-----", RegexOptions.Singleline);
