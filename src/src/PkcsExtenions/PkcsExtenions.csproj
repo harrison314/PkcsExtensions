@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>harrison314</Authors>
     <Title>PKCS Extensions</Title>
-    <Description>PkcsExtenions is litte library without dependencies providet base PKCS and PKI functionality missing in .Net Core.</Description>
+    <Description>PkcsExtenions is little library without dependencies provide base PKCS and PKI functionality missing in .Net Core.</Description>
     <Copyright>harrison314</Copyright>
     <PackageProjectUrl>https://github.com/harrison314/PkcsExtensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/harrison314/PkcsExtensions.git</RepositoryUrl>
