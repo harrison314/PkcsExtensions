@@ -18,6 +18,8 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 - Namespace **PkcsExtenions.Pkcs7** - Missing features for [SignedCms](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.pkcs.signedcms?view=dotnet-plat-ext-3.1).
 - Namespace **PkcsExtenions.X509Certificates**:
   - `X509Certificate2Extensions` - [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1) extensions for determine the usage of certificate.
+  - `X509Certificate2EncodeExtensions` - encode (DER/PEM) extension for [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1).
+  - `X509Certificate2NameInfoExtensions` - [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1) extensions for extract values by OID from isser and subject name - method `GetNameInfo`.
 
  ## PkcsExtensions.Blazor
  Add extensions for Blazor and light [WebCrypto](https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API) interop.
