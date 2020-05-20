@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Version>1.0.1.0</Version>
     <Authors>harrison314</Authors>
     <Title>PKCS Extensions</Title>
     <Description>PkcsExtenions is little library without dependencies provide base PKCS and PKI functionality missing in .Net Core.</Description>
@@ -11,8 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>PKI, PKCS, X509Certificate2, ASN1, CMS Signed message, SP800-108, SecureRandomGenerator</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
