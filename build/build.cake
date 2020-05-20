@@ -63,24 +63,6 @@ Task("Build-PKCSExtensuions")
         DotNetCorePack("../src/src/PkcsExtenions/PkcsExtenions.csproj", settings);
     });
 
-Task("Build-PKCSExtensuionsBlazor")
-    .IsDependentOn("Clean")
-    .Does(() =>
-    {
-        DotNetCorePackSettings settings = new  DotNetCorePackSettings()
-        {
-            Configuration = configuration,
-            OutputDirectory = artefacts,
-            IncludeSource = false,
-            IncludeSymbols = false,
-            NoBuild = false,
-            VersionSuffix = versionSuffix 
-        };
-
-        UpdateSettings(settings);
-        DotNetCorePack("../src/src/PkcsExtenions.Blazor/PkcsExtenions.Blazor.csproj", settings);
-    });
-
 // ****************************************************************************
 
 Task("Test-PKCSExtensuions")
@@ -93,18 +75,6 @@ Task("Test-PKCSExtensuions")
         };
 
         DotNetCoreTest("../src/test/PkcsExtenions.Tests/PkcsExtenions.Tests.csproj", settings);
-    });
-
-Task("Test-PKCSExtensuionsBlazor")
-    .IsDependentOn("Clean")
-    .Does(() =>
-    {
-        DotNetCoreTestSettings settings = new  DotNetCoreTestSettings()
-        {
-            Configuration = configuration
-        };
-
-        DotNetCoreTest("../src/test/PkcsExtenions.Blazor.Tests/PkcsExtenions.Blazor.Tests.csproj", settings);
     });
 
 Task("Test-Usage")
@@ -123,12 +93,10 @@ Task("Test-Usage")
 
 Task("Test")
     .IsDependentOn("Test-PKCSExtensuions")
-    .IsDependentOn("Test-PKCSExtensuionsBlazor")
     .IsDependentOn("Test-Usage");
 
 Task("Build")
-    .IsDependentOn("Build-PKCSExtensuions")
-    .IsDependentOn("Build-PKCSExtensuionsBlazor");
+    .IsDependentOn("Build-PKCSExtensuions");
 
 Task("Default")
     .IsDependentOn("Build");
