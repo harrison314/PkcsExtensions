@@ -44,7 +44,7 @@ namespace PkcsExtenions.Algorithms
 
         public void AddSeedMaterial(byte[] inSeed)
         {
-            if (inSeed == null) throw new ArgumentNullException(nameof(inSeed));
+            ThrowHelpers.CheckNull(nameof(inSeed), inSeed);
 
             lock (this)
             {
@@ -56,14 +56,14 @@ namespace PkcsExtenions.Algorithms
 
         public void NextBytes(byte[] buffer)
         {
-            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+            ThrowHelpers.CheckNull(nameof(buffer), buffer);
 
             this.NextBytes(buffer, 0, buffer.Length);
         }
 
         public void NextBytes(byte[] bytes, int start, int len)
         {
-            if (bytes == null) throw new ArgumentNullException(nameof(bytes));
+            ThrowHelpers.CheckNull(nameof(bytes), bytes);
             if (start < 0 || start >= bytes.Length) throw new ArgumentOutOfRangeException(nameof(start));
             if (start + len > bytes.Length) throw new ArgumentOutOfRangeException(nameof(len));
 

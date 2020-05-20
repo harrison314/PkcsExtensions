@@ -18,18 +18,19 @@ namespace PkcsExtenions.Algorithms
 
         public void AddSeedMaterial(byte[] inSeed)
         {
-
+            ThrowHelpers.CheckNull(nameof(inSeed), inSeed);
         }
 
         public void NextBytes(byte[] buffer)
         {
-            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+            ThrowHelpers.CheckNull(nameof(buffer), buffer);
+
             this.prng.GetBytes(buffer);
         }
 
         public void NextBytes(byte[] buffer, int start, int len)
         {
-            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+            ThrowHelpers.CheckNull(nameof(buffer), buffer);
 
             this.prng.GetBytes(buffer, start, len);
         }
