@@ -10,7 +10,7 @@ namespace PkcsExtenions.Tests
 {
     internal static class CertificateGenerator
     {
-        public static X509Certificate2 Create(string cn, X509KeyUsageFlags? usageFlags = null, string extraKeyUsageOids = null)
+        public static X509Certificate2 Create(string cn, X509KeyUsageFlags? usageFlags = null, string extraKeyUsageOids = null, X509Certificate2 signedCertificate = null)
         {
             using RSA rsaKeys = RSA.Create(2048);
 
@@ -18,6 +18,10 @@ namespace PkcsExtenions.Tests
             if (usageFlags.HasValue)
             {
                 request.CertificateExtensions.Add(new X509KeyUsageExtension(usageFlags.Value, false));
+                if (usageFlags.Value.HasFlag(X509KeyUsageFlags.KeyCertSign))
+                {
+                    request.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 1, false));
+                }
             }
 
             if (!string.IsNullOrEmpty(extraKeyUsageOids))
@@ -30,7 +34,16 @@ namespace PkcsExtenions.Tests
                 request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(oidCollection, false));
             }
 
-            return request.CreateSelfSigned(DateTime.Now.AddDays(-1.0), DateTime.Now.AddDays(1.0));
+            if (signedCertificate == null)
+            {
+                return request.CreateSelfSigned(DateTime.Now.AddDays(-1.0), DateTime.Now.AddDays(1.0));
+            }
+            else
+            {
+                byte[] serial = new byte[] { 1 };
+                // BitConverter.TryWriteBytes(serial.AsSpan(6), DateTime.UtcNow.Ticks);
+                return request.Create(signedCertificate, DateTime.Now.AddDays(-0.5), DateTime.Now.AddDays(0.5), serial);
+            }
         }
     }
 }
