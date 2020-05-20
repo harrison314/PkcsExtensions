@@ -11,6 +11,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>PKI, PKCS, X509Certificate2, ASN1, CMS Signed message, SP800-108, SecureRandomGenerator</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
