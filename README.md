@@ -1,4 +1,6 @@
 # PKCS Extensions
+[![NuGet Status](http://img.shields.io/nuget/v/PkcsExtenions.svg?style=flat)](https://www.nuget.org/packages/PkcsExtenions/)
+
 PKCS extensions for .Net Standard, .Net Core and Blazor BCL without external dependencies.
 
 Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
