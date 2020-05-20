@@ -5,7 +5,7 @@ PKCS extensions for .Net Standard, .Net Core and Blazor BCL without external dep
 
 Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
 
-### Features
+## Features
 - Namespace **PkcsExtenions**:
   - `HashAlgorithmConvertor` - convert [HashAlgorithmName](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithmname?view=netstandard-2.1) to OID, implementation,...
   - `HexConvertor` - convert from/to hexadecimal.
