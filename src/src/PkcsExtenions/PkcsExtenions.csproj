@@ -9,6 +9,7 @@
     <RepositoryUrl>https://github.com/harrison314/PkcsExtensions.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>PKI, PKCS, X509Certificate2, ASN1, CMS Signed message, SP800-108, SecureRandomGenerator</PackageTags>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
