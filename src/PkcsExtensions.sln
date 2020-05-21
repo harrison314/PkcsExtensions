@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkcsExtensions", "src\PkcsE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkcsExtensions.Tests", "test\PkcsExtensions.Tests\PkcsExtensions.Tests.csproj", "{7D20B3B9-D444-4AC3-92D3-BE0780DC0BA8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkcsExtenions.UsageTests", "test\PkcsExtensions.UsageTests\PkcsExtenions.UsageTests.csproj", "{F2C23135-DA1A-4323-B68C-CDDD1E8A3469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PkcsExtensions.UsageTests", "test\PkcsExtensions.UsageTests\PkcsExtensions.UsageTests.csproj", "{DF20F664-B91B-442D-9731-22F27789714B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,10 @@ Global
 		{7D20B3B9-D444-4AC3-92D3-BE0780DC0BA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D20B3B9-D444-4AC3-92D3-BE0780DC0BA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D20B3B9-D444-4AC3-92D3-BE0780DC0BA8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F2C23135-DA1A-4323-B68C-CDDD1E8A3469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2C23135-DA1A-4323-B68C-CDDD1E8A3469}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2C23135-DA1A-4323-B68C-CDDD1E8A3469}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2C23135-DA1A-4323-B68C-CDDD1E8A3469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF20F664-B91B-442D-9731-22F27789714B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF20F664-B91B-442D-9731-22F27789714B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF20F664-B91B-442D-9731-22F27789714B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF20F664-B91B-442D-9731-22F27789714B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,7 +43,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{1D9DFF38-99C8-46C1-9F16-4F1FB1EADBCA} = {E50B6B0F-310E-4F49-8127-00C0F4E57F40}
 		{7D20B3B9-D444-4AC3-92D3-BE0780DC0BA8} = {5BAF0E41-AAC2-40EC-AC03-4EEE5F568ED2}
-		{F2C23135-DA1A-4323-B68C-CDDD1E8A3469} = {5BAF0E41-AAC2-40EC-AC03-4EEE5F568ED2}
+		{DF20F664-B91B-442D-9731-22F27789714B} = {5BAF0E41-AAC2-40EC-AC03-4EEE5F568ED2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9447E283-DABA-4716-94B8-CB0E898EE0B0}
