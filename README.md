@@ -13,7 +13,7 @@ Code is focused for AOT compilation, IL linking and using with Blazor (small lib
 - Namespace **PkcsExtenions.Algorithms**:
   - `HashAlgorithmExtensions` - More friendly extensions for [HashAlgorithm](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netstandard-2.1) types.
   - `DigestRandomGenerator` - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpful for password generation and entropy collection.
-  - `SP800-108` - Standard KDF function in counter mode (inspired from Inferno library).
+  - `SP800_108` - Standard KDF function in counter mode (inspired from Inferno library).
 - Namespace **PkcsExtenions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
 - Namespace **PkcsExtenions.Pkcs1**:
   - `Pkcs1DigestInfo` - Is helpful for RSA signing using SmartCards through PKCS#11.
