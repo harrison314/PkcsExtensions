@@ -45,7 +45,7 @@ Task("Clean")
           CleanDirectory(artefacts);
      });
 
-Task("Build-PKCSExtensuions")
+Task("Build-PkcsExtensions")
     .IsDependentOn("Clean")
     .Does(() =>
     {
@@ -60,12 +60,12 @@ Task("Build-PKCSExtensuions")
         };
 
         UpdateSettings(settings);
-        DotNetCorePack("../src/src/PkcsExtenions/PkcsExtenions.csproj", settings);
+        DotNetCorePack("../src/src/PkcsExtensions/PkcsExtensions.csproj", settings);
     });
 
 // ****************************************************************************
 
-Task("Test-PKCSExtensuions")
+Task("Test-PkcsExtensions")
     .IsDependentOn("Clean")
     .Does(() =>
     {
@@ -74,7 +74,7 @@ Task("Test-PKCSExtensuions")
             Configuration = configuration
         };
 
-        DotNetCoreTest("../src/test/PkcsExtenions.Tests/PkcsExtenions.Tests.csproj", settings);
+        DotNetCoreTest("../src/test/PkcsExtensions.Tests/PkcsExtensions.Tests.csproj", settings);
     });
 
 Task("Test-Usage")
@@ -86,17 +86,17 @@ Task("Test-Usage")
             Configuration = configuration
         };
 
-        DotNetCoreTest("../src/test/PkcsExtenions.UsageTests/PkcsExtenions.UsageTests.csproj", settings);
+        DotNetCoreTest("../src/test/PkcsExtensions.UsageTests/PkcsExtensions.UsageTests.csproj", settings);
     });
 
 // ****************************************************************************
 
 Task("Test")
-    .IsDependentOn("Test-PKCSExtensuions")
+    .IsDependentOn("Test-PkcsExtensions")
     .IsDependentOn("Test-Usage");
 
 Task("Build")
-    .IsDependentOn("Build-PKCSExtensuions");
+    .IsDependentOn("Build-PkcsExtensions");
 
 Task("Default")
     .IsDependentOn("Build");
