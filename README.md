@@ -4,6 +4,8 @@
 PKCS extensions for .Net Standard, .Net Core and Blazor BCL without external dependencies.
 
 Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
+## Usage
+Install package `dotnet add package PkcsExtensions`.
 
 ## Features
 - Namespace **PkcsExtensions**:
