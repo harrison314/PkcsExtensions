@@ -25,6 +25,9 @@ Install package `dotnet add package PkcsExtensions`.
   - `X509Certificate2EncodeExtensions` - encode (DER/PEM) extension for [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1).
   - `X509Certificate2NameInfoExtensions` - [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1) extensions for extract values by OID from isser and subject name - method `GetNameInfo`.
 
+## Examples
+See [code examples](src/test/PkcsExtensions.UsageTests) in test project. 
+
 ## Inspire from
  - [Inferno](https://securitydriven.net/inferno/)
  - [Bouncy Castle](https://github.com/novotnyllc/bc-csharp)
