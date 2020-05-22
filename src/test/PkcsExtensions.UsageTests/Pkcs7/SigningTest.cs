@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System;
 using PkcsExtensions.Pkcs7;
 
-namespace PkcsExtensions.UsageTests
+namespace PkcsExtensions.UsageTests.Pkcs7
 {
     [TestClass]
     public class SigningTest
