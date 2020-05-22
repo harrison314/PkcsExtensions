@@ -13,7 +13,7 @@ namespace PkcsExtensions.UsageTests
     public class SigningTest
     {
         [TestMethod]
-        public void SignDocument()
+        public void Example_SignDocument()
         {
             using X509Certificate2 signingCertificate = CertificateGenerator.Create("Signer", X509KeyUsageFlags.NonRepudiation | X509KeyUsageFlags.DigitalSignature);
 
