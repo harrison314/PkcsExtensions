@@ -58,7 +58,7 @@ namespace PkcsExtensions
             return true;
         }
 
-        public static string GetString(Span<byte> data, HexFormat hexFormat = HexFormat.UpperCase)
+        public static string GetString(ReadOnlySpan<byte> data, HexFormat hexFormat = HexFormat.UpperCase)
         {
             char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex; ;
 
@@ -72,7 +72,7 @@ namespace PkcsExtensions
             return sb.ToString();
         }
 
-        public static bool TryGetString(Span<byte> data, HexFormat hexFormat, Span<char> destination, out int witeChars)
+        public static bool TryGetString(ReadOnlySpan<byte> data, HexFormat hexFormat, Span<char> destination, out int witeChars)
         {
             witeChars = data.Length * 2;
             if (data.Length * 2 > destination.Length)
