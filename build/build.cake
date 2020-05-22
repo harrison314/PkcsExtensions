@@ -99,6 +99,7 @@ Task("Build")
     .IsDependentOn("Build-PkcsExtensions");
 
 Task("Default")
+    .IsDependentOn("Test")
     .IsDependentOn("Build");
 
 //*****************************************************************************
