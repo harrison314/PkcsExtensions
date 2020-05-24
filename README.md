@@ -9,12 +9,16 @@ Install package `dotnet add package PkcsExtensions`.
 
 ## Features
 - Namespace **PkcsExtensions**:
+  - `ECDsaExtensions` - export keys to DER/PEM format on [ECDsa](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.ecdsa?view=netstandard-2.1).
   - `HashAlgorithmConvertor` - convert [HashAlgorithmName](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithmname?view=netstandard-2.1) to OID, implementation,...
   - `HexConvertor` - convert from/to hexadecimal.
+  - `PemFormater` - helper class to convert DER to PEM and back.
+  - `RSAExtensions` - export keys to DER/PEM format on [RSA](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.rsa?view=netstandard-2.1).
   - `SecureStringHelper` - safe provide [SecureString](https://docs.microsoft.com/en-us/dotnet/api/system.security.securestring?view=netstandard-2.1) to byte array.
 - Namespace **PkcsExtensions.Algorithms**:
-  - `HashAlgorithmExtensions` - More friendly extensions for [HashAlgorithm](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netstandard-2.1) types.
   - `DigestRandomGenerator` - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpful for password generation and entropy collection.
+  - `HashAlgorithmExtensions` - More friendly extensions for [HashAlgorithm](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netstandard-2.1) types.
+  - `RngRandomGenerator` - wraper to [RandomNumberGenerator](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=netstandard-2.1)
   - `SP800_108` - Standard KDF function in counter mode (inspired from Inferno library).
 - Namespace **PkcsExtensions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
 - Namespace **PkcsExtensions.Pkcs1**:
