@@ -18,7 +18,7 @@ Install package `dotnet add package PkcsExtensions`.
 - Namespace **PkcsExtensions.Algorithms**:
   - `DigestRandomGenerator` - Secure random generator based on hash algorithm (inspired from Bauncy Castle). Is helpful for password generation and entropy collection.
   - `HashAlgorithmExtensions` - More friendly extensions for [HashAlgorithm](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.hashalgorithm?view=netstandard-2.1) types.
-  - `RngRandomGenerator` - wraper to [RandomNumberGenerator](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=netstandard-2.1)
+  - `RngRandomGenerator` - wrapper to [RandomNumberGenerator](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator?view=netstandard-2.1)
   - `SP800_108` - Standard KDF function in counter mode (inspired from Inferno library).
 - Namespace **PkcsExtensions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
 - Namespace **PkcsExtensions.Pkcs1**:
