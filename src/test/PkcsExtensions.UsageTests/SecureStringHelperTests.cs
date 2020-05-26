@@ -40,7 +40,7 @@ namespace PkcsExtensions.UsageTests
             return pin;
         }
 
-        private static void SetPinToDevice(byte[] pin)
+        private static void SetPinToDevice(byte[]? pin)
         {
             // Only for example
         }

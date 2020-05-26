@@ -10,7 +10,7 @@ namespace PkcsExtensions.UsageTests
 {
     internal class CertificateGenerator
     {
-        public static X509Certificate2 Create(string cn, X509KeyUsageFlags? usageFlags = null, string extraKeyUsageOids = null)
+        public static X509Certificate2 Create(string cn, X509KeyUsageFlags? usageFlags = null, string? extraKeyUsageOids = null)
         {
             using ECDsa elipticKey = ECDsa.Create(ECCurve.NamedCurves.nistP256);
 
