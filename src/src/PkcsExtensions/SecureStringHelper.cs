@@ -11,7 +11,7 @@ namespace PkcsExtensions
 {
     public static class SecureStringHelper
     {
-        public static void ExecuteWithSecureString(SecureString secureString, Encoding encoding, Action<byte[]> action)
+        public static void ExecuteWithSecureString(SecureString secureString, Encoding encoding, Action<byte[]?> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);
             ThrowHelpers.CheckNull(nameof(action), action);
@@ -30,7 +30,7 @@ namespace PkcsExtensions
             }
         }
 
-        public static TResult ExecuteWithSecureString<TResult>(SecureString secureString, Encoding encoding, Func<byte[], TResult> action)
+        public static TResult ExecuteWithSecureString<TResult>(SecureString secureString, Encoding encoding, Func<byte[]?, TResult> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);
             ThrowHelpers.CheckNull(nameof(action), action);
@@ -45,7 +45,7 @@ namespace PkcsExtensions
             }
         }
 
-        public static TResult ExecuteWithSecureString<TResult, TContext>(SecureString secureString, Encoding encoding, TContext context, Func<byte[], TContext, TResult> action)
+        public static TResult ExecuteWithSecureString<TResult, TContext>(SecureString secureString, Encoding encoding, TContext context, Func<byte[]?, TContext, TResult> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);
             ThrowHelpers.CheckNull(nameof(action), action);
@@ -61,7 +61,7 @@ namespace PkcsExtensions
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
-        private unsafe static TReturn ExecuteWithSecureStringInternal<TReturn, TContext>(SecureString secureString, Encoding encoding, TContext context, Func<byte[], TContext, TReturn> action)
+        private unsafe static TReturn ExecuteWithSecureStringInternal<TReturn, TContext>(SecureString secureString, Encoding encoding, TContext context, Func<byte[]?, TContext, TReturn> action)
         {
             int maxBytes = encoding.GetMaxByteCount(secureString.Length);
             IntPtr buffer = IntPtr.Zero;

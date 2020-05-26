@@ -10,8 +10,12 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace PkcsExtensions.ASN1
 {
+#pragma warning disable IDE0009
+
     public sealed class AsnWriter : IDisposable
     {
         private byte[] _buffer;
@@ -400,9 +404,9 @@ namespace PkcsExtensions.ASN1
 
             Debug.Assert(!tag.IsConstructed);
             WriteTag(tag);
-            
 
-            if(unsigned && value[0] >= 0x80)
+
+            if (unsigned && value[0] >= 0x80)
             {
                 WriteLength(value.Length + 1);
                 _buffer.AsSpan(_offset)[0] = 0x00;
@@ -1680,4 +1684,5 @@ namespace PkcsExtensions.ASN1
             }
         }
     }
+#pragma warning restore IDE0009
 }

@@ -36,7 +36,7 @@ namespace PkcsExtensions.Pkcs7
         public override string Format(bool multiLine)
         {
             ThrowHelpers.NotImplemented(nameof(Pkcs7IdAaContentHint));
-            return null;
+            return default;
         }
 
         private static byte[] CreateRawAsn1(string policyOid, HashAlgorithmName algorithmNameForPolicy, ReadOnlySpan<byte> policyHashValue)

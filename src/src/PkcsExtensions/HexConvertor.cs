@@ -11,6 +11,7 @@ namespace PkcsExtensions
     {
         private static readonly char[] lowerCaseHex = "0123456789abcdef".ToCharArray();
         private static readonly char[] upperCaseHex = "0123456789ABCDEF".ToCharArray();
+
         public static byte[] GetBytes(string hexValue)
         {
             ThrowHelpers.CheckNull(nameof(hexValue), hexValue);
@@ -81,7 +82,7 @@ namespace PkcsExtensions
                 return false;
             }
 
-            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex; ;
+            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex;
 
             for (int i = 0; i < witeChars; i += 2)
             {

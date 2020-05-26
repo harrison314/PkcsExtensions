@@ -11,8 +11,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace PkcsExtensions.ASN1
 {
+#pragma warning disable IDE0009
     public class AsnReader
     {
         // T-REC-X.690-201508 sec 9.2
@@ -2939,4 +2942,5 @@ namespace PkcsExtensions.ASN1
             throw new ArgumentOutOfRangeException(nameof(encodingType));
         }
     }
+#pragma warning restore IDE0009
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,7 +10,8 @@ namespace PkcsExtensions
 {
     internal static class ThrowHelpers
     {
-        public static void NotImplemented(string className, [CallerMemberName] string methodName = null)
+        [DoesNotReturn]
+        public static void NotImplemented(string className, [CallerMemberName] string methodName = "")
         {
             throw new NotImplementedException($"{className}.{methodName} is not implement in this version PkcsExtensions.");
         }
@@ -22,7 +24,7 @@ namespace PkcsExtensions
             }
         }
 
-        public static void CheckNullOrEempty(string name, string value)
+        public static void CheckNullOrEempty(string name, string? value)
         {
             if (value == null)
             {
@@ -35,7 +37,7 @@ namespace PkcsExtensions
             }
         }
 
-        public static void CheckNull(string name, object value)
+        public static void CheckNull(string name, object? value)
         {
             if (value == null)
             {
