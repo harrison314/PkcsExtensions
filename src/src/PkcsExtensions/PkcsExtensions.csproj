@@ -15,7 +15,7 @@
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
     <Nullable>enable</Nullable>
-    <PackageReleaseNotes>1.1.0 - Add support for nullable types.</PackageReleaseNotes>
+    <PackageReleaseNotes>1.1.0 - Add support for nullable types. Fix ExportECPrivateKey method.</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

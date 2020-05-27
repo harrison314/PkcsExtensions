@@ -19,7 +19,7 @@ namespace PkcsExtensions
             };
         }
 
-        public static byte[] ExportRSAPrivateKey(this ECDsa rsa, AsnFormat format)
+        public static byte[] ExportECPrivateKey(this ECDsa rsa, AsnFormat format)
         {
             return format switch
             {
