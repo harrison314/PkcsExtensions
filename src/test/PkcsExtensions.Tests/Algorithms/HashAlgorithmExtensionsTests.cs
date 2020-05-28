@@ -38,6 +38,7 @@ namespace PkcsExtensions.Tests.Algorithms
 
             sha1.Update(data1);
             sha1.Update(data2);
+            sha1.Update(new byte[0]);
             sha1.Update(data3);
 
             byte[] hash = sha1.DoFinal();
@@ -70,6 +71,7 @@ namespace PkcsExtensions.Tests.Algorithms
 
             sha1.Update(data1, 0, 2);
             sha1.Update(data2, 4, 20);
+            sha1.Update(new byte[5], 2, 0);
             sha1.Update(data3, 13, 120);
 
             byte[] hash = sha1.DoFinal();
