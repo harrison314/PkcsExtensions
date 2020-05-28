@@ -16,6 +16,7 @@
     <FileVersion>1.1.0.0</FileVersion>
     <Nullable>enable</Nullable>
     <PackageReleaseNotes>1.1.0 - Add support for nullable types. Fix ExportECPrivateKey method.</PackageReleaseNotes>
+    <PackageIcon>NugetIcon.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,5 +26,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\img\NugetIcon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
