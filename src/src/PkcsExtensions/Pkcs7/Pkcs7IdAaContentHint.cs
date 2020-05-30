@@ -30,7 +30,7 @@ namespace PkcsExtensions.Pkcs7
         }
 
         public Pkcs7IdAaContentHint(string fileName)
-            :this(fileName, "application/octet-stream")
+            : this(fileName, "application/octet-stream")
         {
 
         }
@@ -48,13 +48,13 @@ namespace PkcsExtensions.Pkcs7
 
         private static byte[] CreateRawAsn1(string fileName, string contentType)
         {
-            if (fileName == null) throw new ArgumentNullException(nameof(fileName));
-            if (contentType == null) throw new ArgumentNullException(nameof(contentType));
+            ThrowHelpers.CheckNullOrEempty(nameof(fileName), fileName);
+            ThrowHelpers.CheckNullOrEempty(nameof(contentType), contentType);
 
             string idDataString = string.Concat("MIME-Version: 1.0\r\nContent-Type: ",
-                contentType, 
-                "\r\nContent-Disposition: attachment; filename=\"", 
-                fileName, 
+                contentType,
+                "\r\nContent-Disposition: attachment; filename=\"",
+                fileName,
                 "\"");
 
             using AsnWriter asnWriter = new AsnWriter(AsnEncodingRules.DER);

@@ -41,7 +41,7 @@ namespace PkcsExtensions.Pkcs7
 
         private static byte[] CreateRawAsn1(string policyOid, HashAlgorithmName algorithmNameForPolicy, ReadOnlySpan<byte> policyHashValue)
         {
-            ThrowHelpers.CheckNull(nameof(policyOid), policyOid);
+            ThrowHelpers.CheckNullOrEempty(nameof(policyOid), policyOid);
 
             using AsnWriter asnWriter = new AsnWriter(AsnEncodingRules.DER);
             asnWriter.PushSequence();
