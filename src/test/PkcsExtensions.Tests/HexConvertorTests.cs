@@ -23,6 +23,15 @@ namespace PkcsExtensions.Tests
         }
 
         [DataTestMethod]
+        [DataRow("0aac1f00a")]
+        [DataRow("0AAš1F00")]
+        [DataRow("0x0\tAC1F00")]
+        public void GetBytes_secure(string input)
+        {
+            Assert.ThrowsException<ArgumentException>(() => HexConvertor.GetBytes(input));
+        }
+
+        [DataTestMethod]
         [DataRow("0aac1f00")]
         [DataRow("0AAC1F00")]
         [DataRow("0x0AAC1F00")]
@@ -59,7 +68,7 @@ namespace PkcsExtensions.Tests
         {
             byte[] input = new byte[] { 0x0A, 0xAC, 0x1F, 0x00 };
             Span<char> output = new char[input.Length * 2];
-            Assert.IsTrue( HexConvertor.TryGetString(input, HexFormat.LowerCase, output, out int writeChars));
+            Assert.IsTrue(HexConvertor.TryGetString(input, HexFormat.LowerCase, output, out int writeChars));
 
             Assert.AreEqual("0aac1f00", output.ToString());
             Assert.AreEqual(input.Length * 2, writeChars);

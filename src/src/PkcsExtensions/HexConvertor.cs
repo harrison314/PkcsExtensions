@@ -25,6 +25,11 @@ namespace PkcsExtensions
                 hexValue = hexValue.Slice(2);
             }
 
+            if ((hexValue.Length & 0x01) == 0x01)
+            {
+                throw new ArgumentException($"The argument hexValue contains an odd number of hexadecimal characters.");
+            }
+
             byte[] array = new byte[hexValue.Length / 2];
 
             for (int i = 0; i < array.Length; i++)
@@ -40,6 +45,11 @@ namespace PkcsExtensions
             if (hexValue.Length > 2 && hexValue[0] == '0' && (hexValue[1] == 'x' || hexValue[1] == 'X'))
             {
                 hexValue = hexValue.Slice(2);
+            }
+
+            if ((hexValue.Length & 0x01) == 0x01)
+            {
+                throw new ArgumentException($"The argument hexValue contains an odd number of hexadecimal characters.");
             }
 
             int size = hexValue.Length / 2;
@@ -97,8 +107,35 @@ namespace PkcsExtensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int GetHexVal(char hex)
         {
+            if (!((hex >= '0' && hex <= '9') || (hex >= 'a' && hex <= 'f') || (hex >= 'A' && hex <= 'F')))
+            {
+                ThrowNonHexCharacter(hex);
+            }
+
             int val = (int)hex;
             return val - (val < 58 ? 48 : (val < 97 ? 55 : 87));
+        }
+
+        private static void ThrowNonHexCharacter(char hex)
+        {
+            string unicode = $"0000{((int)hex):X}";
+            unicode = unicode.Substring(unicode.Length - 4);
+
+            string charactedDescription;
+            if (char.IsLetterOrDigit(hex) || char.IsPunctuation(hex) || char.IsSymbol(hex))
+            {
+                charactedDescription = $"'{hex}' (\\u{unicode})";
+            }
+            else if (char.IsWhiteSpace(hex))
+            {
+                charactedDescription = $"whitespace (\\u{unicode})";
+            }
+            else
+            {
+                charactedDescription = $"\\u{unicode}";
+            }
+
+            throw new ArgumentException($"The argument hexValue contains non-hexadecimal character: {charactedDescription}.");
         }
     }
 }
