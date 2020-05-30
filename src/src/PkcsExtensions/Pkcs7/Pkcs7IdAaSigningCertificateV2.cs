@@ -66,7 +66,7 @@ namespace PkcsExtensions.Pkcs7
 
         private static byte[] CreateRawAsn1(IEnumerable<X509Certificate2> signingCertificates, HashAlgorithmName hashAlgorithmName)
         {
-            if (signingCertificates == null) throw new ArgumentNullException(nameof(signingCertificates));
+            ThrowHelpers.CheckNull(nameof(signingCertificates), signingCertificates);
 
             using HashAlgorithm hasher = HashAlgorithmConvertor.ToHashAlgorithm(hashAlgorithmName);
             Span<byte> hash = stackalloc byte[hasher.HashSize / 8];
@@ -103,7 +103,7 @@ namespace PkcsExtensions.Pkcs7
 
         private static byte[] CreateRawAsn1(X509Certificate2 signingCertificate, HashAlgorithmName hashAlgorithmName)
         {
-            if (signingCertificate == null) throw new ArgumentNullException(nameof(signingCertificate));
+            ThrowHelpers.CheckNull(nameof(signingCertificate), signingCertificate);
 
             return CreateRawAsn1(new X509Certificate2[] { signingCertificate }, hashAlgorithmName);
         }

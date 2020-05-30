@@ -15,7 +15,7 @@ namespace PkcsExtensions.X509Certificates
 
         public static bool IsForUsage(this X509Certificate2 certificate, X509KeyUsageFlags usageFlag)
         {
-            if (certificate == null) throw new ArgumentNullException(nameof(certificate));
+            ThrowHelpers.CheckNull(nameof(certificate), certificate);
 
             foreach (X509Extension certificateExtension in certificate.Extensions)
             {
@@ -64,7 +64,7 @@ namespace PkcsExtensions.X509Certificates
 
         private static bool IsForExtendedKeyUsage(this X509Certificate2 certificate, string exceptedUsageOid)
         {
-            if (certificate == null) throw new ArgumentNullException(nameof(certificate));
+            ThrowHelpers.CheckNull(nameof(certificate), certificate);
 
             foreach (X509Extension certificateExtension in certificate.Extensions)
             {

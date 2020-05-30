@@ -24,9 +24,17 @@ namespace PkcsExtensions
             }
         }
 
+        public static void CheckRange(string parameterName, int value, int min, int max)
+        {
+            if (value < min || value > max)
+            {
+                throw new ArgumentOutOfRangeException($"Argument {parameterName} is out of range.");
+            }
+        }
+
         public static void CheckNullOrEempty(string name, string? value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new ArgumentNullException(name);
             }
@@ -39,7 +47,7 @@ namespace PkcsExtensions
 
         public static void CheckNull(string name, object? value)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw new ArgumentNullException(name);
             }
