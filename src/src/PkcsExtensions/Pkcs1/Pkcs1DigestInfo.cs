@@ -28,11 +28,18 @@ namespace PkcsExtensions.Pkcs1
 
         private static void ConstructAsn1(HashAlgorithmName hashAlgorithmName, ReadOnlySpan<byte> digest, AsnWriter asnWriter)
         {
+            string oid = HashAlgorithmConvertor.ToOid(hashAlgorithmName);
+            int size = HashAlgorithmConvertor.ToHashSizeInBytes(hashAlgorithmName);
+
+            if (digest.Length != size)
+            {
+                throw new ArgumentOutOfRangeException(nameof(digest), $"digest has bad length. Expected size of {hashAlgorithmName.Name} digest is {size}B, actual length is {digest.Length}.");
+            }
+
             // Digest info
             asnWriter.PushSequence();
 
             // AlgorithmIdetifier
-            string oid = HashAlgorithmConvertor.ToOid(hashAlgorithmName);
             asnWriter.PushSequence();
             asnWriter.WriteObjectIdentifier(oid);
             asnWriter.WriteNull();

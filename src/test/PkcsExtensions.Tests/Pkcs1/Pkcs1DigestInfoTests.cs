@@ -66,7 +66,7 @@ namespace PkcsExtensions.Tests.Pkcs1
         [TestMethod]
         public void TtryEncode_SHA512()
         {
-            byte[] digestValue = new byte[64];
+            byte[] digestValue = new byte[32];
             byte[] result = new byte[1024];
             bool success = Pkcs1DigestInfo.TryEncode(HashAlgorithmName.SHA256, digestValue, result, out int len);
 
