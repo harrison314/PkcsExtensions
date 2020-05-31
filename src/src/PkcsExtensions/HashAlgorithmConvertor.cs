@@ -68,5 +68,35 @@ namespace PkcsExtensions
 
             throw new NotSupportedException($"Not support algorithm {hashAlgorithmName.Name} in HashAlgorithmConvertor method.");
         }
+
+        public static int ToHashSizeInBytes(HashAlgorithmName hashAlgorithmName)
+        {
+            if (HashAlgorithmName.SHA256.Equals(hashAlgorithmName))
+            {
+                return 32;
+            }
+
+            if (HashAlgorithmName.SHA384.Equals(hashAlgorithmName))
+            {
+                return 48;
+            }
+
+            if (HashAlgorithmName.SHA512.Equals(hashAlgorithmName))
+            {
+                return 64;
+            }
+
+            if (HashAlgorithmName.SHA1.Equals(hashAlgorithmName))
+            {
+                return 20;
+            }
+
+            if (HashAlgorithmName.MD5.Equals(hashAlgorithmName))
+            {
+                return 16;
+            }
+
+            throw new NotSupportedException($"Not support algorithm {hashAlgorithmName.Name} in HashAlgorithmConvertor method.");
+        }
     }
 }
