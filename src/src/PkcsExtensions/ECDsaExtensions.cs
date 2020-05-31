@@ -9,32 +9,38 @@ namespace PkcsExtensions
 {
     public static class ECDsaExtensions
     {
-        public static byte[] ExportSubjectPublicKeyInfo(this ECDsa rsa, AsnFormat format)
+        public static byte[] ExportSubjectPublicKeyInfo(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
             {
-                AsnFormat.Der => rsa.ExportSubjectPublicKeyInfo(),
-                AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportSubjectPublicKeyInfo(), "PUBLIC KEY"),
+                AsnFormat.Der => ecdsa.ExportSubjectPublicKeyInfo(),
+                AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportSubjectPublicKeyInfo(), "PUBLIC KEY"),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static byte[] ExportECPrivateKey(this ECDsa rsa, AsnFormat format)
+        [Obsolete("Use ExportECPrivateKey.", true)]
+        public static byte[] ExportRSAPrivateKey(this ECDsa ecdsa, AsnFormat format)
+        {
+            return ecdsa.ExportECPrivateKey(format);
+        }
+
+        public static byte[] ExportECPrivateKey(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
             {
-                AsnFormat.Der => rsa.ExportECPrivateKey(),
-                AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportECPrivateKey(), "EC PRIVATE KEY"),
+                AsnFormat.Der => ecdsa.ExportECPrivateKey(),
+                AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportECPrivateKey(), "EC PRIVATE KEY"),
                 _ => throw new NotImplementedException()
             };
         }
 
-        public static byte[] ExportPkcs8PrivateKey(this ECDsa rsa, AsnFormat format)
+        public static byte[] ExportPkcs8PrivateKey(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
             {
-                AsnFormat.Der => rsa.ExportPkcs8PrivateKey(),
-                AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportPkcs8PrivateKey(), "PRIVATE KEY"),
+                AsnFormat.Der => ecdsa.ExportPkcs8PrivateKey(),
+                AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportPkcs8PrivateKey(), "PRIVATE KEY"),
                 _ => throw new NotImplementedException()
             };
         }
