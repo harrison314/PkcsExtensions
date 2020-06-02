@@ -46,6 +46,18 @@ namespace PkcsExtensions.Tests
             }
         }
 
+        [TestMethod]
+        public void TryFromOid()
+        {
+            Assert.IsTrue(HashAlgorithmConvertor.TryFromOid(Oids.SHA384, out HashAlgorithmName name1));
+            Assert.AreEqual(HashAlgorithmName.SHA384, name1);
+
+            Assert.IsTrue(HashAlgorithmConvertor.TryFromOid(Oids.SHA256, out HashAlgorithmName name2));
+            Assert.AreEqual(HashAlgorithmName.SHA256, name2);
+
+            Assert.IsFalse(HashAlgorithmConvertor.TryFromOid("1.4.74.12.1.4", out _));
+        }
+
         private HashAlgorithmName[] GetNames()
         {
             return new HashAlgorithmName[]

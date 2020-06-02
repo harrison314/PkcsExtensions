@@ -98,5 +98,23 @@ namespace PkcsExtensions
 
             throw new NotSupportedException($"Not support algorithm {hashAlgorithmName.Name} in HashAlgorithmConvertor method.");
         }
+
+        public static bool TryFromOid(string hashAlgorithmOid, out HashAlgorithmName hashAlgorithmName)
+        {
+            ThrowHelpers.CheckNull(nameof(hashAlgorithmOid), hashAlgorithmOid);
+
+            (bool success, HashAlgorithmName algorithm) = hashAlgorithmOid switch
+            {
+                Oids.MD5 => (true, HashAlgorithmName.MD5),
+                Oids.SHA1 => (true, HashAlgorithmName.SHA1),
+                Oids.SHA256 => (true, HashAlgorithmName.SHA256),
+                Oids.SHA384 => (true, HashAlgorithmName.SHA384),
+                Oids.SHA512 => (true, HashAlgorithmName.SHA512),
+                _ => (false, default)
+            };
+
+            hashAlgorithmName = algorithm;
+            return success;
+        }
     }
 }
