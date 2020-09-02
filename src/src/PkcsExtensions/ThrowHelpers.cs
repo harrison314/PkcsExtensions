@@ -52,5 +52,10 @@ namespace PkcsExtensions
                 throw new ArgumentNullException(name);
             }
         }
+
+        public static void ThrowArgumentException(string message)
+        {
+            throw new ArgumentException(message);
+        }
     }
 }
