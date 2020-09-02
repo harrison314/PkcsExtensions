@@ -23,6 +23,7 @@ Install package `dotnet add package PkcsExtensions`.
 - Namespace **PkcsExtensions.ASN1** - ASN.1 writer and reader from Microsoft corefx repository.
 - Namespace **PkcsExtensions.Pkcs1**:
   - `Pkcs1DigestInfo` - Is helpful for RSA signing using SmartCards through PKCS#11.
+  - `ECDsaSigValue` - Encode _ECDsa-Sig-Value_ (RFC5480).
 - Namespace **PkcsExtensions.Pkcs7** - Missing features for [SignedCms](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.pkcs.signedcms?view=dotnet-plat-ext-3.1).
 - Namespace **PkcsExtensions.X509Certificates**:
   - `X509Certificate2Extensions` - [X509Certificate2](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509certificate2?view=netstandard-2.1) extensions for determine the usage of certificate.
