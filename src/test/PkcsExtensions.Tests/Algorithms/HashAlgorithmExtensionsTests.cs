@@ -80,6 +80,43 @@ namespace PkcsExtensions.Tests.Algorithms
         }
 
         [TestMethod]
+        public async Task UpdateWithStream()
+        {
+            using SHA1 sha1 = SHA1.Create();
+
+            byte[] data1 = new byte[2];
+            byte[] data2 = new byte[20];
+            byte[] data3 = new byte[147];
+
+            Random r = new Random(42);
+            r.NextBytes(data1);
+            r.NextBytes(data2);
+            r.NextBytes(data3);
+
+            using MemoryStream ms = new MemoryStream();
+            ms.Write(data1);
+            ms.Write(data2);
+            ms.Write(data3);
+            ms.Position = 0L;
+
+            using MemoryStream hms = new MemoryStream();
+            hms.Write(data2);
+            hms.Write(data3);
+            hms.Position = 0L;
+
+            using SHA1 alternative = SHA1.Create();
+
+            byte[] exceptedHash = alternative.ComputeHash(ms);
+
+            sha1.Update(data1);
+            await sha1.Update(hms);
+
+            byte[] hash = sha1.DoFinal();
+
+            CollectionAssert.AreEquivalent(exceptedHash, hash, "Error in cputed hash.");
+        }
+
+        [TestMethod]
         public void DoFinal()
         {
             using SHA1 sha1 = SHA1.Create();

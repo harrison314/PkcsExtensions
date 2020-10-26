@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PkcsExtensions.Algorithms
@@ -44,6 +47,20 @@ namespace PkcsExtensions.Algorithms
             if (start + length - offset > 0)
             {
                 hashAlgorithm.TransformBlock(input, offset, input.Length - offset, null, 0);
+            }
+        }
+
+        public static async Task Update(this HashAlgorithm hashAlgorithm, Stream stream, CancellationToken cancellationToken = default)
+        {
+            ThrowHelpers.CheckNull(nameof(stream), stream);
+
+            int size = hashAlgorithm.HashSize / 8;
+            byte[] buffer = new byte[size];
+            int read;
+
+            while ((read = await stream.ReadAsync(buffer, 0, size, cancellationToken).ConfigureAwait(false)) > 0)
+            {
+                hashAlgorithm.TransformBlock(buffer, 0, read, null, 0);
             }
         }
 
