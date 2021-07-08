@@ -26,7 +26,12 @@ namespace PkcsExtensions.Algorithms
             hmac.Key = key;
 
             int bufferLen = CalculateBufferLenght(label, context);
+
+#if NETCOREAPP
+            Span<byte> buffer = (bufferLen > StackAllocTreshold) ? stackalloc byte[bufferLen] : GC.AllocateUninitializedArray<byte>(bufferLen, false);
+#else
             Span<byte> buffer = (bufferLen > StackAllocTreshold) ? stackalloc byte[bufferLen] : new byte[bufferLen];
+#endif
             FillBuffer(buffer, label, context, checked((uint)(derivedOutput.Length << 3)));
 
             DeriveKey(hmac, buffer, derivedOutput, counter);

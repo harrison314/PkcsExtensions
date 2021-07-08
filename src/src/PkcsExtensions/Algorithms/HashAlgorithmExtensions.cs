@@ -55,7 +55,11 @@ namespace PkcsExtensions.Algorithms
             ThrowHelpers.CheckNull(nameof(stream), stream);
 
             int size = hashAlgorithm.HashSize / 8;
+#if NETCOREAPP
+            byte[] buffer = GC.AllocateUninitializedArray<byte>(size, false);
+#else
             byte[] buffer = new byte[size];
+#endif
             int read;
 
             while ((read = await stream.ReadAsync(buffer, 0, size, cancellationToken).ConfigureAwait(false)) > 0)
@@ -66,9 +70,13 @@ namespace PkcsExtensions.Algorithms
 
         public static byte[] DoFinal(this HashAlgorithm hashAlgorithm)
         {
+#if NETCOREAPP
+            byte[] result = GC.AllocateUninitializedArray<byte>(hashAlgorithm.HashSize / 8, false);
+#else
             byte[] result = new byte[hashAlgorithm.HashSize / 8];
+#endif
             hashAlgorithm.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-            Buffer.BlockCopy(hashAlgorithm.Hash, 0, result, 0, result.Length);
+            Buffer.BlockCopy(hashAlgorithm.Hash!, 0, result, 0, result.Length);
 
             return result;
         }
