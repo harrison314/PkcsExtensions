@@ -15,7 +15,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => rsa.ExportSubjectPublicKeyInfo(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportSubjectPublicKeyInfo(), "PUBLIC KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(RSAExtensions))
             };
         }
 
@@ -25,7 +25,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => rsa.ExportRSAPublicKey(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportRSAPublicKey(), "RSA PUBLIC KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(RSAExtensions))
             };
         }
 
@@ -35,7 +35,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => rsa.ExportRSAPrivateKey(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportRSAPrivateKey(), "RSA PRIVATE KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(RSAExtensions))
             };
         }
 
@@ -45,7 +45,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => rsa.ExportPkcs8PrivateKey(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(rsa.ExportPkcs8PrivateKey(), "PRIVATE KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(RSAExtensions))
             };
         }
     }

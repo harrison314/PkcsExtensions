@@ -15,7 +15,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => ecdsa.ExportSubjectPublicKeyInfo(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportSubjectPublicKeyInfo(), "PUBLIC KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(ECDsaExtensions))
             };
         }
 
@@ -31,7 +31,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => ecdsa.ExportECPrivateKey(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportECPrivateKey(), "EC PRIVATE KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(ECDsaExtensions))
             };
         }
 
@@ -41,7 +41,7 @@ namespace PkcsExtensions
             {
                 AsnFormat.Der => ecdsa.ExportPkcs8PrivateKey(),
                 AsnFormat.Pem => PemFormater.ToPemBytes(ecdsa.ExportPkcs8PrivateKey(), "PRIVATE KEY"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(ECDsaExtensions))
             };
         }
     }

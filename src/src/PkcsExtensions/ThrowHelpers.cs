@@ -16,6 +16,12 @@ namespace PkcsExtensions
             throw new NotImplementedException($"{className}.{methodName} is not implement in this version PkcsExtensions.");
         }
 
+        [DoesNotReturn]
+        public static T NotImplemented<T>(string className, [CallerMemberName] string methodName = "")
+        {
+            throw new NotImplementedException($"{className}.{methodName} is not implement in this version PkcsExtensions.");
+        }
+
         public static void CheckRange(string parameter1Name, int parameter1, string parameter2Name, int parameter2)
         {
             if (parameter1 >= parameter2)

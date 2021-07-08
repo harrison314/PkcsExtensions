@@ -42,8 +42,7 @@ namespace PkcsExtensions.Pkcs7
 
         public override string Format(bool multiLine)
         {
-            ThrowHelpers.NotImplemented(nameof(Pkcs7IdAaContentHint));
-            return default;
+            return ThrowHelpers.NotImplemented<string>(nameof(Pkcs7IdAaContentHint));
         }
 
         private static byte[] CreateRawAsn1(string fileName, string contentType)

@@ -15,7 +15,7 @@ namespace PkcsExtensions.X509Certificates
             {
                 AsnFormat.Der => certificate.RawData,
                 AsnFormat.Pem => PemFormater.ToPemBytes(certificate.RawData, "CERTIFICATE"),
-                _ => throw new NotImplementedException()
+                _ => ThrowHelpers.NotImplemented<byte[]>(nameof(X509Certificate2EncodeExtensions))
             };
         }
     }
