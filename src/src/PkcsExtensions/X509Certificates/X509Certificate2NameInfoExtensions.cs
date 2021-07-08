@@ -13,8 +13,20 @@ namespace PkcsExtensions.X509Certificates
         public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, bool forIssuer)
         {
             ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
+            return GetNameInfo(certificate, nameTypeOid, forIssuer ? X509NameSource.Issuer : X509NameSource.Subject);
+        }
 
-            byte[] nameBytes = forIssuer ? certificate.IssuerName.RawData : certificate.SubjectName.RawData;
+        public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, X509NameSource nameSource)
+        {
+            ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
+
+            byte[] nameBytes = nameSource switch
+            {
+                X509NameSource.Issuer => certificate.IssuerName.RawData,
+                X509NameSource.Subject => certificate.SubjectName.RawData,
+                _ => ThrowHelpers.NotSupport<byte[], X509NameSource>(nameSource)
+            };
+
             List<string> result = new List<string>();
 
             AsnReader nameReader = new AsnReader(nameBytes, AsnEncodingRules.DER);
@@ -30,12 +42,6 @@ namespace PkcsExtensions.X509Certificates
             }
 
             return result;
-        }
-
-        public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, X509NameSource nameSource)
-        {
-            ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
-            return GetNameInfo(certificate, nameTypeOid, nameSource == X509NameSource.Issuer);
         }
     }
 }

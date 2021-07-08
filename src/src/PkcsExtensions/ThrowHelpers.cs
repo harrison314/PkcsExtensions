@@ -10,7 +10,6 @@ namespace PkcsExtensions
 {
     internal static class ThrowHelpers
     {
-        [DoesNotReturn]
         public static void NotImplemented(string className, [CallerMemberName] string methodName = "")
         {
             throw new NotImplementedException($"{className}.{methodName} is not implement in this version PkcsExtensions.");
@@ -62,6 +61,12 @@ namespace PkcsExtensions
         public static void ThrowArgumentException(string message)
         {
             throw new ArgumentException(message);
+        }
+
+        [DoesNotReturn]
+        public static T NotSupport<T, TEnum>(TEnum value)
+        {
+            throw new NotSupportedException($"Enum value {value} is not supported.");
         }
     }
 }
