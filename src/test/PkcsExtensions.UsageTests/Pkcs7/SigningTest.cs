@@ -33,7 +33,7 @@ namespace PkcsExtensions.UsageTests.Pkcs7
             signer.SignedAttributes.Add(new AsnEncodedData(new Pkcs9SigningTime(DateTime.Now)));
             signer.SignedAttributes.Add(new Pkcs7IdAaContentHint("helloWorld.txt", "text/plain"));
             signer.SignedAttributes.Add(new Pkcs7IdAaSigningCertificateV2(signingCertificate));
-            signer.SignedAttributes.Add(new Pkcs9IdSigningPolicy("1.3.158.36061701.1.2.2", HashAlgorithmName.SHA256, "1A5A86D067512E00DB45FCD8DFB9A0574749D1D1F2A7189ED9F2DFE6ADE82DBD"));
+            signer.SignedAttributes.Add(new Pkcs9IdSigningPolicy("1.3.158.36061701.1.2.2", HashAlgorithmName.SHA256, "1A5A86D067512E00DB45FCD8DFB9A0574749D1D1F2A7189ED9F2DFE6ADE82DBD")); // Only for old Slovak format - SK ZEP
 
             signedCms.ComputeSignature(signer, false);
             byte[] eidasP7mFileBytes = signedCms.Encode();
