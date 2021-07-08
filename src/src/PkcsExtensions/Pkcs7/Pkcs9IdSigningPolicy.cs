@@ -47,7 +47,10 @@ namespace PkcsExtensions.Pkcs7
             asnWriter.PushSequence();
             asnWriter.WriteObjectIdentifier(policyOid);
             asnWriter.PushSequence();
+            asnWriter.PushSequence();
             asnWriter.WriteObjectIdentifier(HashAlgorithmConvertor.ToOid(algorithmNameForPolicy));
+            asnWriter.WriteNull();
+            asnWriter.PopSequence();
             asnWriter.WriteOctetString(policyHashValue);
             asnWriter.PopSequence();
             asnWriter.PopSequence();
