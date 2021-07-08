@@ -14,6 +14,7 @@ namespace PkcsExtensions.Algorithms
     {
         private readonly HashAlgorithm digest;
         private readonly bool isDigestOwner;
+        private readonly object syncRoot;
         private const long CYCLE_COUNT = 10;
 
         private long stateCounter;
@@ -28,12 +29,17 @@ namespace PkcsExtensions.Algorithms
 
         public DigestRandomGenerator(HashAlgorithm hashAlgorithm)
         {
-            this.digest = hashAlgorithm ?? throw new ArgumentNullException(nameof(hashAlgorithm));
+            ThrowHelpers.CheckNull(nameof(hashAlgorithm), hashAlgorithm);
+
+            this.digest = hashAlgorithm;
+            
             this.seed = new byte[this.digest.HashSize / 8];
             this.seedCounter = 1;
             this.state = new byte[this.digest.HashSize / 8];
             this.stateCounter = 1;
             this.isDigestOwner = false;
+
+            this.syncRoot = new object();
         }
 
         public DigestRandomGenerator(HashAlgorithmName hashAlgorithmName)
@@ -46,7 +52,7 @@ namespace PkcsExtensions.Algorithms
         {
             ThrowHelpers.CheckNull(nameof(inSeed), inSeed);
 
-            lock (this)
+            lock (this.syncRoot)
             {
                 this.DigestUpdate(inSeed);
                 this.DigestUpdate(this.seed);
@@ -67,7 +73,7 @@ namespace PkcsExtensions.Algorithms
             if (start < 0 || start >= bytes.Length) throw new ArgumentOutOfRangeException(nameof(start));
             if (start + len > bytes.Length) throw new ArgumentOutOfRangeException(nameof(len));
 
-            lock (this)
+            lock (this.syncRoot)
             {
                 int stateOff = 0;
 
@@ -88,7 +94,7 @@ namespace PkcsExtensions.Algorithms
 
         public void NextBytes(Span<byte> buffer)
         {
-            lock (this)
+            lock (this.syncRoot)
             {
                 int stateOff = 0;
 
@@ -160,7 +166,7 @@ namespace PkcsExtensions.Algorithms
         private void DigestDoFinal(byte[] result)
         {
             this.digest.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-            Buffer.BlockCopy(this.digest.Hash, 0, result, 0, this.digest.HashSize / 8);
+            Buffer.BlockCopy(this.digest.Hash!, 0, result, 0, this.digest.HashSize / 8);
         }
     }
 }
