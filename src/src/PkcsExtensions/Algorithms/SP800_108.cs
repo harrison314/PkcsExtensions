@@ -2,6 +2,7 @@
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,7 @@ namespace PkcsExtensions.Algorithms
                 counter);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static int CalculateBufferLenght(ReadOnlySpan<byte> label, ReadOnlySpan<byte> context)
         {
             return COUNTER_LENGTH + (label.Length + 1) + context.Length + DERIVED_KEY_LENGTH_LENGTH;
