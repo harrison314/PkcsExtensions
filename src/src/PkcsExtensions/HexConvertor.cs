@@ -9,8 +9,8 @@ namespace PkcsExtensions
 {
     public static class HexConvertor
     {
-        private static readonly char[] lowerCaseHex = "0123456789abcdef".ToCharArray();
-        private static readonly char[] upperCaseHex = "0123456789ABCDEF".ToCharArray();
+        private static readonly char[] lowerCaseHex = new char[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+        private static readonly char[] upperCaseHex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
         public static byte[] GetBytes(string hexValue)
         {
@@ -73,6 +73,32 @@ namespace PkcsExtensions
         {
             char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex;
 
+#if NET5_0_OR_GREATER
+            if (data.Length < 150)
+            {
+                Span<char> buffer = stackalloc char[data.Length * 2];
+                int j = 0;
+                for (int i = 0; i < data.Length; i++)
+                {
+                    buffer[j++] = values[data[i] >> 4];
+                    buffer[j++] = values[data[i] & 0xF];
+                }
+
+                return new string(buffer);
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder(data.Length * 2);
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sb.Append(values[data[i] >> 4]);
+                    sb.Append(values[data[i] & 0xF]);
+                }
+
+                return sb.ToString();
+            }
+
+#else
             StringBuilder sb = new StringBuilder(data.Length * 2);
             for (int i = 0; i < data.Length; i++)
             {
@@ -81,6 +107,7 @@ namespace PkcsExtensions
             }
 
             return sb.ToString();
+#endif
         }
 
         public static bool TryGetString(ReadOnlySpan<byte> data, HexFormat hexFormat, Span<char> destination, out int witeChars)
