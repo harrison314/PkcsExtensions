@@ -109,7 +109,7 @@ namespace PkcsExtensions.UsageTests.Pkcs7
             Rfc3161TimestampToken? timestampToken = request.ProcessResponse(data, out _);
 
             Oid signatureTimeStampOid = new Oid("1.2.840.113549.1.9.16.2.14");
-            newSignerInfo.UnsignedAttributes.Add(new AsnEncodedData(signatureTimeStampOid, timestampToken.AsSignedCms().Encode()));
+            newSignerInfo.AddUnsignedAttribute(new AsnEncodedData(signatureTimeStampOid, timestampToken.AsSignedCms().Encode()));
         }
     }
 }
