@@ -19,12 +19,6 @@ namespace PkcsExtensions
             };
         }
 
-        [Obsolete("Use ExportECPrivateKey.", true)]
-        public static byte[] ExportRSAPrivateKey(this ECDsa ecdsa, AsnFormat format)
-        {
-            return ecdsa.ExportECPrivateKey(format);
-        }
-
         public static byte[] ExportECPrivateKey(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
