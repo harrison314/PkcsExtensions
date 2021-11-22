@@ -9,6 +9,9 @@ namespace PkcsExtensions.X509Certificates
 {
     public static class X509Certificate2EncodeExtensions
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] GetEncoded(this X509Certificate2 certificate, AsnFormat format)
         {
             return format switch

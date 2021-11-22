@@ -10,12 +10,18 @@ namespace PkcsExtensions.X509Certificates
 {
     public static class X509Certificate2NameInfoExtensions
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, bool forIssuer)
         {
             ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
             return GetNameInfo(certificate, nameTypeOid, forIssuer ? X509NameSource.Issuer : X509NameSource.Subject);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, X509NameSource nameSource)
         {
             ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);

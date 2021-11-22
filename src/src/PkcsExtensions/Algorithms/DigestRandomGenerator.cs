@@ -10,6 +10,9 @@ namespace PkcsExtensions.Algorithms
     /// <summary>
     /// The secure digest random generator.
     /// </summary>
+#if NET6_0 || NET5_0
+    [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
     public class DigestRandomGenerator : IRandomGenerator
     {
         private readonly HashAlgorithm digest;

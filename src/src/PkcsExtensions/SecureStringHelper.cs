@@ -11,6 +11,9 @@ namespace PkcsExtensions
 {
     public static class SecureStringHelper
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static void ExecuteWithSecureString(SecureString secureString, Encoding encoding, Action<byte[]?> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);
@@ -30,6 +33,9 @@ namespace PkcsExtensions
             }
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static TResult ExecuteWithSecureString<TResult>(SecureString secureString, Encoding encoding, Func<byte[]?, TResult> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);
@@ -45,6 +51,9 @@ namespace PkcsExtensions
             }
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static TResult ExecuteWithSecureString<TResult, TContext>(SecureString secureString, Encoding encoding, TContext context, Func<byte[]?, TContext, TResult> action)
         {
             ThrowHelpers.CheckNull(nameof(encoding), encoding);

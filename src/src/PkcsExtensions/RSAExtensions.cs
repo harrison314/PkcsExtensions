@@ -9,6 +9,9 @@ namespace PkcsExtensions
 {
     public static class RSAExtensions
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportSubjectPublicKeyInfo(this RSA rsa, AsnFormat format)
         {
             return format switch
@@ -19,6 +22,9 @@ namespace PkcsExtensions
             };
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportRSAPublicKey(this RSA rsa, AsnFormat format)
         {
             return format switch
@@ -29,6 +35,9 @@ namespace PkcsExtensions
             };
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportRSAPrivateKey(this RSA rsa, AsnFormat format)
         {
             return format switch
@@ -39,6 +48,9 @@ namespace PkcsExtensions
             };
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportPkcs8PrivateKey(this RSA rsa, AsnFormat format)
         {
             return format switch

@@ -9,6 +9,9 @@ namespace PkcsExtensions
 {
     public static class ECDsaExtensions
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportSubjectPublicKeyInfo(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
@@ -19,6 +22,9 @@ namespace PkcsExtensions
             };
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportECPrivateKey(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch
@@ -29,6 +35,9 @@ namespace PkcsExtensions
             };
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] ExportPkcs8PrivateKey(this ECDsa ecdsa, AsnFormat format)
         {
             return format switch

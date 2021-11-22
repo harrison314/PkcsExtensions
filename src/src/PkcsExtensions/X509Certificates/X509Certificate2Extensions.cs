@@ -13,6 +13,9 @@ namespace PkcsExtensions.X509Certificates
         private const string idKpCodeSigning = "1.3.6.1.5.5.7.3.3";
         private const string idKpEmailProtection = "1.3.6.1.5.5.7.3.4";
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForUsage(this X509Certificate2 certificate, X509KeyUsageFlags usageFlag)
         {
             ThrowHelpers.CheckNull(nameof(certificate), certificate);
@@ -31,32 +34,50 @@ namespace PkcsExtensions.X509Certificates
             return false;
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForDocumentSigning(this X509Certificate2 certificate)
         {
             return IsForUsage(certificate, X509KeyUsageFlags.NonRepudiation);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForDigitalSigning(this X509Certificate2 certificate)
         {
             return IsForUsage(certificate, X509KeyUsageFlags.DigitalSignature);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForEncryption(this X509Certificate2 certificate)
         {
             return IsForUsage(certificate, X509KeyUsageFlags.KeyEncipherment) || IsForUsage(certificate, X509KeyUsageFlags.DataEncipherment);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForAuthentification(this X509Certificate2 certificate)
         {
             return IsForExtendedKeyUsage(certificate, idKpClientAuth);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForCodeSigning(this X509Certificate2 certificate)
         {
             return IsForExtendedKeyUsage(certificate, idKpCodeSigning)
                 && IsForUsage(certificate, X509KeyUsageFlags.DigitalSignature);
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool IsForEmailProtection(this X509Certificate2 certificate)
         {
             return IsForExtendedKeyUsage(certificate, idKpEmailProtection);

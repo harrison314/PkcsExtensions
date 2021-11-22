@@ -12,6 +12,9 @@ namespace PkcsExtensions.Algorithms
 {
     public static class HashAlgorithmExtensions
     {
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static void Update(this HashAlgorithm hashAlgorithm, byte[] input)
         {
             ThrowHelpers.CheckNull(nameof(input), input);
@@ -30,6 +33,9 @@ namespace PkcsExtensions.Algorithms
             }
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static void Update(this HashAlgorithm hashAlgorithm, byte[] input, int start, int length)
         {
             ThrowHelpers.CheckNull(nameof(input), input);
@@ -68,6 +74,9 @@ namespace PkcsExtensions.Algorithms
             }
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static byte[] DoFinal(this HashAlgorithm hashAlgorithm)
         {
 #if NETCOREAPP
@@ -81,6 +90,9 @@ namespace PkcsExtensions.Algorithms
             return result;
         }
 
+#if NET6_0 || NET5_0
+        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
         public static bool TryDoFinal(this HashAlgorithm hashAlgorithm, Span<byte> hash, out int writeBytes)
         {
             int size = hashAlgorithm.HashSize / 8;

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace PkcsExtensions
 {
+#if NET6_0 || NET5_0
+    [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
     public static class HashAlgorithmConvertor
     {
         public static string ToOid(HashAlgorithmName hashAlgorithmName)

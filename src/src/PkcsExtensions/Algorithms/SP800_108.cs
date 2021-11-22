@@ -12,6 +12,9 @@ namespace PkcsExtensions.Algorithms
     /// <summary>
     /// KDF algorithm SP800-108 in counter mode.
     /// </summary>
+#if NET6_0 || NET5_0
+    [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
+#endif
     public static class SP800_108
     {
         const int SHORT_BYTECOPY_THRESHOLD = 32;
