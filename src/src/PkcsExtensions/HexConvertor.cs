@@ -71,7 +71,7 @@ namespace PkcsExtensions
 
         public static string GetString(ReadOnlySpan<byte> data, HexFormat hexFormat = HexFormat.UpperCase)
         {
-            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex; ;
+            char[] values = hexFormat == HexFormat.LowerCase ? lowerCaseHex : upperCaseHex;
 
             StringBuilder sb = new StringBuilder(data.Length * 2);
             for (int i = 0; i < data.Length; i++)

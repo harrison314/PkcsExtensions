@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
     <Version>1.2.1.0</Version>
     <Authors>harrison314</Authors>
     <Title>PKCS Extensions</Title>
@@ -12,8 +12,8 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>PKI, PKCS, X509Certificate2, ASN1, CMS Signed message, SP800-108, SecureRandomGenerator</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
-    <FileVersion>1.2.0.0</FileVersion>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
     <Nullable>enable</Nullable>
     <PackageReleaseNotes>1.1.0 - Add support for nullable reference types. Fix ExportECPrivateKey method. Improve security in HexConvertor. Add new methods to HashAlgorithmConvertor.
   1.2.0 - Add class for ECDsa-Sig-Value and async compute hash from stream.</PackageReleaseNotes>
@@ -31,6 +31,10 @@
 	<PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\..\img\NugetIcon.png">
