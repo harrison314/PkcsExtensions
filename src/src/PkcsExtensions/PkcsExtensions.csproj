@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;net5.0;net6.0</TargetFrameworks>
-    <Version>1.2.1.0</Version>
+    <Version>1.2.2.0</Version>
     <Authors>harrison314</Authors>
     <Title>PKCS Extensions</Title>
     <Description>PkcsExtensions is little library without dependencies provide base PKCS and PKI functionality missing in .Net Core.</Description>
@@ -16,7 +16,8 @@
     <FileVersion>1.2.1.0</FileVersion>
     <Nullable>enable</Nullable>
     <PackageReleaseNotes>1.1.0 - Add support for nullable reference types. Fix ExportECPrivateKey method. Improve security in HexConvertor. Add new methods to HashAlgorithmConvertor.
-  1.2.0 - Add class for ECDsa-Sig-Value and async compute hash from stream.</PackageReleaseNotes>
+  1.2.0 - Add class for ECDsa-Sig-Value and async compute hash from stream.
+  1.2.2 - Add support dotnet 6.</PackageReleaseNotes>
     <PackageIcon>NugetIcon.png</PackageIcon>
   </PropertyGroup>
 
