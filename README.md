@@ -3,7 +3,9 @@
 
 PKCS extensions for .Net Standard, .Net Core and Blazor BCL without external dependencies.
 
-Code is focused for AOT compilation, IL linking and using with Blazor (small library, avoid reflection, minimalize internal code dependencies).
+Code is focused for AOT compilation and IL linking (small library, avoid reflection, minimalize internal code dependencies).
+Cryptography in Blazor WebAssembly is not supported in versions: 5.0, 6.0.
+
 ## Usage
 Install package `dotnet add package PkcsExtensions`.
 
