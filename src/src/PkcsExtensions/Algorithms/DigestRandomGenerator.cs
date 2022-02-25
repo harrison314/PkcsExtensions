@@ -160,7 +160,7 @@ namespace PkcsExtensions.Algorithms
         private void DigestDoFinal(byte[] result)
         {
             this.digest.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-            Buffer.BlockCopy(this.digest.Hash, 0, result, 0, this.digest.HashSize / 8);
+            Buffer.BlockCopy(this.digest.Hash!, 0, result, 0, this.digest.HashSize / 8);
         }
     }
 }

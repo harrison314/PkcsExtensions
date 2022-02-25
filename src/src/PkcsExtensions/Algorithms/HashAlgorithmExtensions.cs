@@ -68,7 +68,7 @@ namespace PkcsExtensions.Algorithms
         {
             byte[] result = new byte[hashAlgorithm.HashSize / 8];
             hashAlgorithm.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-            Buffer.BlockCopy(hashAlgorithm.Hash, 0, result, 0, result.Length);
+            Buffer.BlockCopy(hashAlgorithm.Hash!, 0, result, 0, result.Length);
 
             return result;
         }
