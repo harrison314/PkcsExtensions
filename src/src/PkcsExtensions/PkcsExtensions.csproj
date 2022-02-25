@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>1.2.0.0</Version>
+    <TargetFrameworks>netstandard2.1;net6.0</TargetFrameworks>
+    <Version>1.2.2.0</Version>
     <Authors>harrison314</Authors>
     <Title>PKCS Extensions</Title>
     <Description>PkcsExtensions is little library without dependencies provide base PKCS and PKI functionality missing in .Net Core.</Description>
