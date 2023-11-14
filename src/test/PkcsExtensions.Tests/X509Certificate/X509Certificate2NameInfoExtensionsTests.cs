@@ -47,5 +47,37 @@ namespace PkcsExtensions.Tests.X509Certificate
             CollectionAssert.AreEquivalent(nameValues, resultList1.ToArray(), "Error with bool variant.");
             CollectionAssert.AreEquivalent(nameValues, resultList2.ToArray(), "Error with X509NameSource variant.");
         }
+
+        [DataTestMethod]
+        [DataRow("hello world,O=harrison", "2.5.4.3", "hello world")]
+        [DataRow("hello world,O=harrison,O=organization2", "2.5.4.10", "harrison,organization2")]
+        public void GetNameInfos_ForSubject(string subject, string oid, string values)
+        {
+            string[] nameValues = values.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            X509Certificate2 certificate = CertificateGenerator.Create(subject);
+
+            IReadOnlyList<NameInfo> resultList1 = certificate.GetNameInfo(false);
+            IReadOnlyList<NameInfo> resultList2 = certificate.GetNameInfo(X509NameSource.Subject);
+
+            CollectionAssert.AreEquivalent(nameValues, resultList1.First(t => t.Oid == oid).Values.ToArray(), "Error with bool variant.");
+            CollectionAssert.AreEquivalent(nameValues, resultList2.First(t => t.Oid == oid).Values.ToArray(), "Error with X509NameSource variant.");
+        }
+
+        [DataTestMethod]
+        [DataRow("hello world,O=harrison", "2.5.4.3", "hello world")]
+        [DataRow("hello world,O=harrison,O=organization2", "2.5.4.10", "harrison,organization2")]
+        public void GetNameInfos_ForIssuer(string subject, string oid, string values)
+        {
+            string[] nameValues = values.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            X509Certificate2 certificate = CertificateGenerator.Create(subject);
+
+            IReadOnlyList<NameInfo> resultList1 = certificate.GetNameInfo(true);
+            IReadOnlyList<NameInfo> resultList2 = certificate.GetNameInfo(X509NameSource.Issuer);
+
+            CollectionAssert.AreEquivalent(nameValues, resultList1.First(t => t.Oid == oid).Values.ToArray(), "Error with bool variant.");
+            CollectionAssert.AreEquivalent(nameValues, resultList2.First(t => t.Oid == oid).Values.ToArray(), "Error with X509NameSource variant.");
+        }
     }
 }

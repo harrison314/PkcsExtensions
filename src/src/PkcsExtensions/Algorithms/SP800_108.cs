@@ -41,10 +41,11 @@ namespace PkcsExtensions.Algorithms
             DeriveKey(hmac, buffer, derivedOutput, counter);
         }
 
+        [Obsolete("Use DeriveKey with hmacFactory.")]
         public static void DeriveKey(string hmacAlgorithmName, byte[] key, ReadOnlySpan<byte> label = default, ReadOnlySpan<byte> context = default, Span<byte> derivedOutput = default, uint counter = 1)
         {
             ThrowHelpers.CheckNullOrEempty(nameof(hmacAlgorithmName), hmacAlgorithmName);
-            DeriveKey(() => HMAC.Create(hmacAlgorithmName) ?? throw new ArgumentException($"Hash algorithm name {hmacAlgorithmName} is not supported."),
+            DeriveKey(() => HMAC.Create(hmacAlgorithmName) ?? throw new ArgumentException($"HMAC algorithm name {hmacAlgorithmName} is not supported."),
                 key,
                 label,
                 context,

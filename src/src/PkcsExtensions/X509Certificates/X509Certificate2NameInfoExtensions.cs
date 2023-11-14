@@ -49,5 +49,42 @@ namespace PkcsExtensions.X509Certificates
 
             return result;
         }
+
+        public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, X509NameSource nameSource)
+        {
+            ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
+            return GetNameInfo(certificate, nameTypeOid, nameSource == X509NameSource.Issuer);
+        }
+
+        public static IReadOnlyList<NameInfo> GetNameInfo(this X509Certificate2 certificate, bool forIssuer)
+        {
+            byte[] nameBytes = forIssuer ? certificate.IssuerName.RawData : certificate.SubjectName.RawData;
+            Dictionary<string, List<string>> infos = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+
+            AsnReader nameReader = new AsnReader(nameBytes, AsnEncodingRules.DER);
+            AsnReader mainSequence = nameReader.ReadSequence();
+            while (mainSequence.HasData)
+            {
+                AsnReader x509Name = mainSequence.ReadSetOf().ReadSequence();
+                string oid = x509Name.ReadObjectIdentifierAsString();
+                if (infos.TryGetValue(oid, out List<string> list))
+                {
+                    list.Add(x509Name.GetCharacterString(UniversalTagNumber.PrintableString));
+                }
+                else
+                {
+                    list = new List<string>();
+                    list.Add(x509Name.GetCharacterString(UniversalTagNumber.PrintableString));
+                    infos.Add(oid, list);
+                }
+            }
+
+            return infos.Select(pair => new NameInfo(pair.Key, pair.Value)).ToList();
+        }
+
+        public static IReadOnlyList<NameInfo> GetNameInfo(this X509Certificate2 certificate, X509NameSource nameSource)
+        {
+            return GetNameInfo(certificate, nameSource == X509NameSource.Issuer);
+        }
     }
 }

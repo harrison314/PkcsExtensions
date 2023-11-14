@@ -227,7 +227,7 @@ namespace PkcsExtensions.ASN1
             return _controlFlags == other._controlFlags && TagValue == other.TagValue;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             return obj is Asn1Tag && Equals((Asn1Tag)obj);
