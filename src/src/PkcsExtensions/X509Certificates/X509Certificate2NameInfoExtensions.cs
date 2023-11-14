@@ -10,29 +10,14 @@ namespace PkcsExtensions.X509Certificates
 {
     public static class X509Certificate2NameInfoExtensions
     {
-#if NET6_0 || NET5_0
+#if NET6_0_OR_GREATER
         [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
 #endif
         public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, bool forIssuer)
         {
             ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
-            return GetNameInfo(certificate, nameTypeOid, forIssuer ? X509NameSource.Issuer : X509NameSource.Subject);
-        }
 
-#if NET6_0 || NET5_0
-        [System.Runtime.Versioning.UnsupportedOSPlatform("browser")]
-#endif
-        public static IReadOnlyList<string> GetNameInfo(this X509Certificate2 certificate, string nameTypeOid, X509NameSource nameSource)
-        {
-            ThrowHelpers.CheckNullOrEempty(nameof(nameTypeOid), nameTypeOid);
-
-            byte[] nameBytes = nameSource switch
-            {
-                X509NameSource.Issuer => certificate.IssuerName.RawData,
-                X509NameSource.Subject => certificate.SubjectName.RawData,
-                _ => ThrowHelpers.NotSupport<byte[], X509NameSource>(nameSource)
-            };
-
+            byte[] nameBytes = forIssuer ? certificate.IssuerName.RawData : certificate.SubjectName.RawData;
             List<string> result = new List<string>();
 
             AsnReader nameReader = new AsnReader(nameBytes, AsnEncodingRules.DER);
@@ -67,7 +52,7 @@ namespace PkcsExtensions.X509Certificates
             {
                 AsnReader x509Name = mainSequence.ReadSetOf().ReadSequence();
                 string oid = x509Name.ReadObjectIdentifierAsString();
-                if (infos.TryGetValue(oid, out List<string> list))
+                if (infos.TryGetValue(oid, out List<string>? list))
                 {
                     list.Add(x509Name.GetCharacterString(UniversalTagNumber.PrintableString));
                 }

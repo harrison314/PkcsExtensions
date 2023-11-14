@@ -100,7 +100,7 @@ namespace PkcsExtensions.UsageTests.Pkcs7
                 throw new CryptographicException($"There was a error from the timestamp authority. It responded with {httpResponse.StatusCode} {(int)httpResponse.StatusCode}: {httpResponse.Content}");
             }
 
-            if (httpResponse.Content.Headers.ContentType.MediaType != "application/timestamp-reply")
+            if (httpResponse.Content.Headers.ContentType?.MediaType != "application/timestamp-reply")
             {
                 throw new CryptographicException("The reply from the time stamp server was in a invalid format.");
             }
