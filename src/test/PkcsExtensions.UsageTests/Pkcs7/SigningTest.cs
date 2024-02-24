@@ -74,8 +74,10 @@ namespace PkcsExtensions.UsageTests.Pkcs7
         private async Task CreateTimeStamp(SignedCms signedCms)
         {
             // See: https://www.glennwatson.net/posts/rfc-3161-signing
+            // See: https://gist.github.com/Manouchehri/fd754e402d98430243455713efada710
+            // http://time.certum.pl/
 
-            const string timeStampAuthorityUri = "http://time.certum.pl/";
+            const string timeStampAuthorityUri = "http://ts.quovadisglobal.com/eu";
             byte[] nonce = new byte[8];
             using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
             {
