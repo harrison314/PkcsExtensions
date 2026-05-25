@@ -1,6 +1,9 @@
 # PKCS Extensions
 [![NuGet Status](http://img.shields.io/nuget/v/PkcsExtensions.svg?style=flat)](https://www.nuget.org/packages/PkcsExtensions/)
 
+> [!WARNING]
+> Thanks to improvements to the standard library in C# (BCL) and .NET in versions 9 and 10, the **PkcsExtensions** library has lost its meaning of existence, because almost all functionality is already implemented in .NET. The functionality that is still missing in .NET 10 is in the namespaces `PkcsExtensions.Pkcs1` and `PkcsExtensions.Pkcs7`.
+
 PKCS extensions for .Net Standard, .Net Core and Blazor BCL without external dependencies.
 
 Code is focused for AOT compilation and IL linking (small library, avoid reflection, minimalize internal code dependencies).
